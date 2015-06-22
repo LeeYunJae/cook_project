@@ -95,7 +95,6 @@
 					
 					<div class="well row" id="commentForm">
 							<input type="hidden" id="commentPageNum" value="1">
-							<input type="hidden" name="recipe_num" id="recipe_num" value="${recipeVO.recipe_num}">
 						
 						 
 						<!-- 댓글이 0개인 경우 -->

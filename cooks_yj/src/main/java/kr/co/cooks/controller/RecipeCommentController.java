@@ -43,16 +43,15 @@ public class RecipeCommentController {
 	
 	//코멘트 삭제
 	@RequestMapping("/recipeCommentDelete.app")
-	public ModelAndView recipeCommentDelete(@RequestParam int recipe_num, int rcomment_num) {
+	public ModelAndView recipeCommentDelete(@RequestParam int recipe_num, int rcomment_num, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		
-		System.out.println("rcomment_num ===> " + rcomment_num);
+		//System.out.println("rcomment_num ===> " + rcomment_num);
 				
 		mav.addObject("commentVO", commentService.commentDelete(recipe_num, rcomment_num));
 		mav.setViewName("JSON");
 		
-		return mav ;
-					
+		return mav ;			
 	}
 
 }

@@ -34,5 +34,4 @@ public class RecipeCommentService {
 		
 		return commentRead(recipe_num, 10);
 	}
-
 }
