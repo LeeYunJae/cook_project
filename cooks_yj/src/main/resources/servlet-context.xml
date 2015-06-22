@@ -46,6 +46,12 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
+	<!-- MappingJackson2JsonView가 자동으로 json형식으로 바꿔서 view역할을 함 -->
+   <bean id="JSON" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
+   <!--<bean id="JSON" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">  -->
+   </bean>
+	
+	
 	<context:component-scan base-package="kr.co.cooks" />
 	
 	

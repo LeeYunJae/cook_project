@@ -7,9 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>
-	Hello world! welcome !!!!!
-</h1>
+
+<form action="/cooks/recipeList.app" method="post">
+	pageNum : <input type="text" name="pageNum"><br />
+	<input type="submit" value="글 목록페이지">
+</form>
 
 </body>
 </html>
