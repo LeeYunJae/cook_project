@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -38,6 +39,20 @@ public class RecipeCommentController {
 		mav.setViewName("JSON");
 				
 		return mav;		
+	}
+	
+	//코멘트 삭제
+	@RequestMapping("/recipeCommentDelete.app")
+	public ModelAndView recipeCommentDelete(@RequestParam int recipe_num, int rcomment_num) {
+		ModelAndView mav = new ModelAndView();
+		
+		System.out.println("rcomment_num ===> " + rcomment_num);
+				
+		mav.addObject("commentVO", commentService.commentDelete(recipe_num, rcomment_num));
+		mav.setViewName("JSON");
+		
+		return mav ;
+					
 	}
 
 }

@@ -14,4 +14,8 @@
 		order by rcomment_num) human) 
 		where rm between 1 and #{endRow}
 	</select>
+	
+	<delete id="commentDelete" parameterType="Integer">
+		delete from RECIPE_COMMENTS where rcomment_num=#{rcomment_num}
+	</delete>
 </mapper>

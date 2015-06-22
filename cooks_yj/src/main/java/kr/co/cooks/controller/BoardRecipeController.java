@@ -53,9 +53,10 @@ public class BoardRecipeController {
 	
 	//글 쓰기 폼
 	@RequestMapping(value="/recipeWriteForm.app")
-	public ModelAndView recipeWriteForm(HttpSession session) {
+	public ModelAndView recipeWriteForm(@RequestParam String pageNum, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		
+		mav.addObject("pageNum", pageNum);
 		mav.setViewName("board_recipe/recipeWriteForm");
 		
 		return mav;		

@@ -29,5 +29,10 @@ public class RecipeCommentService {
 		return commentDao.commentRead(hashMap);
 	}
 	
+	public List<RecipeCommentVO> commentDelete(int recipe_num, int rcomment_num){
+		commentDao.commentDelete(rcomment_num);
+		
+		return commentRead(recipe_num, 10);
+	}
 
 }
