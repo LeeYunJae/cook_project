@@ -34,4 +34,10 @@ public class RecipeCommentService {
 		
 		return commentRead(recipe_num, 10);
 	}
+	
+//	public List<RecipeCommentVO> commentUpdate(int recipe_num, int rcomment_num){
+//		commentDao.commentUpdate(rcomment_num);
+//		
+//		return commentRead(recipe_num, 10);
+//	}
 }

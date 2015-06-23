@@ -53,5 +53,16 @@ public class RecipeCommentController {
 		
 		return mav ;			
 	}
+	
+	//코멘트 수정
+//	@RequestMapping("/recipeCommentUpdate.app")
+//	public ModelAndView recipeCommentUpdate(@RequestParam int recipe_num, int rcomment_num, HttpSession session) {
+//		ModelAndView mav = new ModelAndView();
+//				
+//		mav.addObject("commentVO", commentService.commentUpdate(recipe_num, rcomment_num));
+//		mav.setViewName("JSON");
+//		
+//		return mav ;			
+//	}
 
 }
