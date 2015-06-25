@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.cooks.dao.ReviewDao">
+
+	<select id="totalSize" resultType="Integer">
+		select count(RE_NUM) FROM REVIEW
+	</select>
+	
+	<select id="getReviewList" parameterType="HashMap" resultType="reviewVO">
+		select RE_NUM, ID, RE_TITLE, RE_CONTENT, RE_DATE, RE_GRADE, RE_FNAME, RE_DEPT, RE_POSITION, F_NUM
+		FROM REVIEW
+		<if test="pageSize > 0">
+			where rownum between #{startRow} and #{pageSize}
+		</if>
+		ORDER BY RE_NUM
+	</select>
+	
+
+</mapper>

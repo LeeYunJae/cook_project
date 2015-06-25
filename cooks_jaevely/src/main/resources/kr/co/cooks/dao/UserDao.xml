@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.cooks.dao.UserDao">
+
+	<select id="existUser" parameterType="Map" resultType="UserVO">
+		select ID, PASSWORD, NAME, ADDRESS, PHONE, USER_LEVEL, MILEAGE
+		from USERS
+		where ID = #{email} AND PASSWORD=#{password}
+	</select>
+	
+	<insert id="signUpUser" parameterType="UserVO">
+		insert into USERS values(#{id}, #{password}, #{name}, #{address}, #{phone}, #{user_Level}, #{mileage} )
+	</insert>
+	
+	<update id="userUpdate" parameterType="UserVO">
+		update USERS
+		set PASSWORD=#{password}, NAME=#{name}, ADDRESS=#{address}, PHONE=#{phone}
+		where ID=#{id}
+	</update>
+
+</mapper>
+

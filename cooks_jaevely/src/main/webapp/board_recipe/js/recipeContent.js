@@ -1,0 +1,332 @@
+$(document).ready( function() {
+	
+	//alert(recipe_num);
+	//alert("여기===>" + $('#userId').val());
+	
+	getComment(1);
+	getLike();
+	addHit();
+	checkLikePeople();
+	
+	commentPageNum = parseInt($("#commentPageNum").val());	//value=1
+	
+	//코멘트 '추가'버튼 눌린 경우
+	$("#comment_write").click( function() {
+	
+		if($('#rcomment_content').val()=="") {
+			alert("댓글을 먼저 입력하세요*^^*");
+		}	
+		else {
+			$.ajax({
+				type : "POST",
+				url : "recipeCommentWrite.app",
+				async : true,
+				dataType : "json",
+				data : {
+					recipe_num : $('#recipe_num').val(),
+					rcomment_content : $('#rcomment_content').val()
+				},
+				success : function(data) {
+					getComment(1);	
+				},
+				error : function(xhr) {
+					
+					alert("error html = " + xhr.statusText);
+				}	
+			});			
+		}
+		
+	});	
+}); 
+
+/**************************코멘트 처리*************************************/
+//코멘트 가져오기
+function getComment(commentPageNum)  {
+	event.preventDefault();
+	
+	if(commentPageNum==1) {
+		$('#commentPageNum').val(1);
+	}
+	
+	commentPageNum = parseInt(commentPageNum);
+	
+	$.ajax({
+		type : "POST",
+		url : "recipeCommentRead.app",
+		async : true,
+		dataType : "json",
+		data : {
+			recipe_num : $('#recipe_num').val(),
+			endRow : commentPageNum*20
+		},
+		success : function(data) {
+			var html = '';
+			var userId = $('#userId').val()
+			
+			$.each(data.commentVO, function(entryIndex, entry) {
+				var formatted_date = new Date(entry.rcomment_date);		
+	
+				html += '<div class="row">';
+				html += '<div class="col-md-2 col-sm-3 text-center">' + entry.id + '</div>';
+				html += '<div class="col-md-10 col-sm-9">';
+				html += '<div class="panel" style="background: #F5F5F5">' + entry.rcomment_content;
+				
+				html += '<div id="inlineFooter" style="float: right">';	
+				
+				if(userId==entry.id)
+				{				
+					html += '<a onclick="recipeCommentDelete(' + entry.rcomment_num +')">댓글 삭제 </a>' ;
+				}
+				
+							
+				html += '</div>'
+				
+				html += '<div class="row">';
+				html += '<div class="col-xs-9">';
+				html += '<small class="text-muted">' +formatted_date.toLocaleString() + '</small>';
+				html += '</div>';
+				html += '</div>';
+				html += '</div>';
+				html += '</div>';
+				html += '</div>';	
+				
+			});
+			$('#show_comment').html(html);				
+			$('#rcomment_content').val("");	//댓글 입력값 초기화	
+		},
+		error : function(xhr) {			
+			alert("error html = " + xhr.statusText);
+		}	
+	});
+}
+
+//코멘트 삭제
+function recipeCommentDelete(comment_num) {	
+	$.ajax({
+		type : "POST",
+		url : "recipeCommentDelete.app",
+		async : true,
+		dataType : "json",
+		data : {
+			recipe_num : $('#recipe_num').val(),
+			rcomment_num : comment_num,		
+		},
+		success : function(data) {
+			getComment(1);			
+		},
+		error : function(xhr) {			
+			alert("error html = " + xhr.statusText);
+		}		
+	});		
+}
+
+//댓글달기 폼으로 포커스 이동
+function getFocus() {
+	document.getElementById("rcomment_content").focus();
+}
+
+/**************************좋아요 처리*************************************/
+//좋아요
+function clickLike() {
+	$('#like').hide() ;
+	$('#dislike').show() ;
+	
+	$.ajax({
+		type : "POST",
+		url : "recipeLike.app",
+		async : true,
+		dataType : "json",
+		data : {
+			recipe_num : $('#recipe_num').val(),			
+		},		
+		success : function(data) {
+			var recipe_like = data.recipe_like ;
+			
+			addLikePeople();
+			$('#recipe_like_form').text(recipe_like);			
+		},
+		error : function(xhr) {			
+			alert("error html = " + xhr.statusText);
+		}	
+	});
+}
+
+//좋아요 취소
+function clickDislike() {
+	$('#like').show() ;
+	$('#dislike').hide() ;
+	
+	$.ajax({
+		type : "POST",
+		url : "recipeDislike.app",
+		async : true,
+		dataType : "json",
+		data : {
+			recipe_num : $('#recipe_num').val(),			
+		},
+		success : function(data) {
+			var recipe_like = data.recipe_like ;
+			
+			minusLikePeople();
+			$('#recipe_like_form').text(recipe_like);			
+		},
+		error : function(xhr) {			
+			alert("error html = " + xhr.statusText);
+		}	
+	});
+}
+
+//좋아요 수 가져오기
+function getLike() {
+	$.ajax({
+		type : "POST",
+		url : "getRecipeLike.app",
+		async : true,
+		dataType : "json",
+		data : {
+			recipe_num : $('#recipe_num').val(),			
+		},
+		success : function(data) {		
+			var recipe_like = data.recipe_like ;
+			
+			$('#recipe_like_form').text(recipe_like);
+		},
+		error : function(xhr) {			
+			alert("error html = " + xhr.statusText);
+		}	
+	});
+}
+
+//좋아요 누른 사람 추가
+function addLikePeople() {
+	$.ajax({
+		type : "POST",
+		url : "addLikePeople.app",
+		async : true,
+		dataType : "json",
+		data : {
+			recipe_num : $('#recipe_num').val()			
+		},
+		//success : 	
+			//alert("디비에 저장 성공"),
+	});	
+}
+
+//좋아요 누른 사람 빼기
+function minusLikePeople() {
+	$.ajax({
+		type : "POST",
+		url : "minusLikePeople.app",
+		async : true,
+		dataType : "json",
+		data : {
+			recipe_num : $('#recipe_num').val(),			
+		},
+		//success : 
+			//alert("디비에서 빼기 성공"),
+	});	
+}
+
+//전에 좋아요 눌렀는지 확인
+function checkLikePeople() {
+	$.ajax({
+		type : "POST",
+		url : "checkLikePeople.app",
+		async : true,
+		dataType : "json",
+		data : {
+			recipe_num : $('#recipe_num').val(),			
+		},
+		success : function(data) {		
+			var checkLikePeople = data.checkLikePeople ;
+			
+			if(checkLikePeople==0) {
+				$('#like').show() ;
+				$('#dislike').hide() ;	
+				
+				//alert("전에 like 누른적 없음")
+			}
+			else if(checkLikePeople>0) {
+				$('#like').hide() ;
+				$('#dislike').show() ;
+				
+				//alert("전에 like 누름")				
+			}
+		},
+	});	
+}
+
+//조회수 추가
+function addHit() {
+	$.ajax({
+		type : "POST",
+		url : "recipeHit.app",
+		async : true,
+		dataType : "json",
+		data : {
+			recipe_num : $('#recipe_num').val(),			
+		},		
+		error : function(xhr) {			
+			alert("error html = " + xhr.statusText);
+		}		
+	});	
+}
+
+
+/**************************게시글 삭제 처리*************************************/
+//삭제버튼 눌리면
+function clickRecipeDelete() {
+	
+	deleteAllLike();
+	likeCountDelete();
+	recipeAllCommentDelete();
+	
+	recipeDelete();	
+}
+
+//좋아요 삭제
+function deleteAllLike() {
+	$.ajax({
+		type : "POST",
+		url : "likeDelete.app",
+		async : true,
+		dataType : "json",
+		data : {
+			recipe_num : $('#recipe_num').val(),
+		},
+		//success : alert("좋아요 삭제"),
+	});
+}
+
+//좋아요 수 삭제
+function likeCountDelete() {
+	$.ajax({
+		type : "POST",
+		url : "likeCountDelete.app",
+		async : true,
+		dataType : "json",
+		data : {
+			recipe_num : $('#recipe_num').val(),
+		},
+		//success : alert("좋아요 수 삭제"),
+	});
+}
+
+//모든 코멘트 삭제
+function recipeAllCommentDelete() {
+	$.ajax({
+		type : "POST",
+		url : "recipeAllCommentDelete.app",
+		async : true,
+		dataType : "json",
+		data : {
+			recipe_num : $('#recipe_num').val(),	
+		},
+		//success : alert("모든 코멘트 삭제"),	
+	});		
+}
+
+//글 삭제
+function recipeDelete() {
+	location.href="recipeDelete.app?recipe_num=" +  $('#recipe_num').val() + "&pageNum=" +  $('#pageNum').val();	
+}

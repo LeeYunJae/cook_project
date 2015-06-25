@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<typeAliases>
+		<typeAlias alias="userVO" type="kr.co.cooks.vo.UserVO"/>
+		<typeAlias alias="reviewVO" type="kr.co.cooks.vo.ReviewVO"/>
+		<typeAlias alias="recipeVO" type="kr.co.cooks.vo.RecipeBoardVO"/>
+		<typeAlias alias="commentVO" type="kr.co.cooks.vo.RecipeCommentVO"/>
+		<typeAlias alias="recipeLikeVO" type="kr.co.cooks.vo.RecipeLikeVO"/>
+	</typeAliases>
+	
+</configuration>

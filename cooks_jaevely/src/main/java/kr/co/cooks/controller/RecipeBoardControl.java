@@ -1,0 +1,223 @@
+package kr.co.cooks.controller;
+
+import java.util.HashMap;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import kr.co.cooks.service.RecipeBoardService;
+import kr.co.cooks.vo.RecipeBoardVO;
+import kr.co.cooks.vo.UserVO;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+public class RecipeBoardControl {
+	@Autowired RecipeBoardService recipeService ;
+	RecipeBoardVO recipeVO;	
+
+	//글 목록(리스트)
+	@RequestMapping(value="/recipeList.app")
+	public ModelAndView recipeList(@RequestParam(defaultValue="1") String pageNum, HttpSession session) {		
+		ModelAndView mav = new ModelAndView();
+
+		HashMap<String, Object> hashMap= recipeService.list(pageNum);
+
+		mav.addObject("pageNum", pageNum);
+		mav.addObject("count", hashMap.get("count"));
+		mav.addObject("recipeList", hashMap.get("recipeList"));
+		mav.addObject("pagecode", hashMap.get("pagecode"));		
+		mav.setViewName("board_recipe/recipeList");
+
+		return mav;
+	}
+
+	//글 쓰기 폼
+	@RequestMapping(value="/recipeWriteForm.app")
+	public ModelAndView recipeWriteForm(@RequestParam String pageNum, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("pageNum", pageNum);
+		mav.setViewName("board_recipe/recipeWriteForm");
+
+		return mav;		
+	}
+
+	//글 쓰기
+	@RequestMapping(value="/recipeWrite.app")
+	public String recipeWrite(@ModelAttribute RecipeBoardVO recipeVO, HttpSession session) {
+
+		UserVO sessionVO = (UserVO)session.getAttribute("loginUser");		
+		recipeVO.setId(sessionVO.getId());
+
+		recipeService.write(recipeVO);		
+
+		return "redirect:/recipeList.app?pageNum="+1;		
+	}
+
+
+	//글 읽기
+	@RequestMapping(value="/recipeContent.app")
+	public ModelAndView recipeContent(@RequestParam int recipe_num, @RequestParam String pageNum, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+
+		int recipeCommentCount=0 ;
+
+		recipeVO=recipeService.content(recipe_num);
+		recipeCommentCount=recipeService.getCommentCount(recipe_num);	//댓글 개수
+
+		mav.addObject("recipeVO", recipeVO);
+		mav.addObject("pageNum", pageNum);
+		mav.addObject("recipeCommentCount",recipeCommentCount);	
+
+		mav.setViewName("board_recipe/recipeContent");		
+
+		return mav ;
+	}
+
+	//글 수정 폼
+	@RequestMapping(value="/recipeUpdateForm.app")
+	public ModelAndView recipeUpdateForm(@RequestParam int recipe_num, @RequestParam String pageNum, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+
+		recipeVO=recipeService.getUpdateRecipe(recipe_num);
+
+		mav.addObject("recipeVO", recipeVO);
+		mav.addObject("pageNum", pageNum);
+
+		mav.setViewName("board_recipe/recipeUpdateForm");		
+
+		return mav ;		
+	}
+
+	//글 수정
+	@RequestMapping(value="/recipeUpdate.app")
+	public String recipeUpdate(@ModelAttribute RecipeBoardVO recipeVO, @RequestParam String pageNum) {
+
+		recipeService.update(recipeVO);
+
+		return "redirect:/recipeContent.app?recipe_num="+recipeVO.getRecipe_num() +"&pageNum=" + pageNum ;	
+	}
+
+
+	//글 삭제
+	@RequestMapping(value="/recipeDelete.app")
+	public String recipeDelete(@RequestParam int recipe_num, @RequestParam String pageNum) {
+
+		System.out.println("글삭제");
+
+		recipeService.delete(recipe_num);
+
+		return "redirect:/recipeList.app?pageNum=" + pageNum ;	
+	}
+
+	//좋아요
+	@RequestMapping(value="/recipeLike.app")
+	public ModelAndView recipeLike(@RequestParam int recipe_num) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("recipe_like", recipeService.addLike(recipe_num));
+		mav.setViewName("JSON");
+
+		return mav ; 		
+	}
+
+	//좋아요 취소
+	@RequestMapping(value="/recipeDislike.app")
+	public ModelAndView recipeDislike(@RequestParam int recipe_num) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("recipe_like", recipeService.minusLike(recipe_num));
+		mav.setViewName("JSON");
+
+		return mav ; 		
+	}
+
+	//좋아요 수 가져오기
+	@RequestMapping(value="/getRecipeLike.app")
+	public ModelAndView getRecipeLike(int recipe_num) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("recipe_like", recipeService.getRecipeLike(recipe_num));
+		mav.setViewName("JSON");
+
+		return mav ; 		
+	}
+
+	//좋아요 사람 추가
+	@RequestMapping(value="/addLikePeople.app")
+	public void addLikePeople(@RequestParam int recipe_num, HttpSession session) {
+		HashMap<String, Object> hashMap = new HashMap<>();	
+
+		UserVO sessionVO = (UserVO)session.getAttribute("loginUser");
+
+		hashMap.put("recipe_num", recipe_num);
+		hashMap.put("id", sessionVO.getId());		
+
+		recipeService.addLikePeople(hashMap);		
+	}
+
+	//좋아요 사람 빼기
+	@RequestMapping(value="/minusLikePeople.app")
+	public void minusLikePeople(@RequestParam int recipe_num, HttpSession session) {
+		HashMap<String, Object> hashMap = new HashMap<>();	
+
+		UserVO sessionVO = (UserVO)session.getAttribute("loginUser");
+
+		hashMap.put("recipe_num", recipe_num);
+		hashMap.put("id", sessionVO.getId());		
+
+		recipeService.minusLikePeople(hashMap);		
+	}
+
+	//좋아요 누른 사람 체크
+	@RequestMapping(value="/checkLikePeople.app")
+	public ModelAndView checkLikePeople(@RequestParam int recipe_num, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		
+		if(session.getAttribute("loginUser")==null) {
+			
+			mav.addObject("checkLikePeople", 0);
+			return mav ;
+		}
+	
+		HashMap<String, Object> hashMap = new HashMap<>();
+		UserVO sessionVO = (UserVO)session.getAttribute("loginUser");
+
+		hashMap.put("recipe_num", recipe_num);
+		hashMap.put("id", sessionVO.getId());		
+
+		mav.addObject("checkLikePeople", recipeService.checkLikePeople(hashMap));	
+		mav.setViewName("JSON");
+
+		return mav ;
+	}
+	
+	//좋아요 모두 삭제
+	@RequestMapping(value="/likeDelete.app")
+	public void likeDelete(@RequestParam int recipe_num, HttpSession session) {		
+		recipeService.likeDelete(recipe_num);
+	}
+	
+	//좋아요 수 모두 삭제
+	@RequestMapping(value="/likeCountDelete.app")
+	public void likeCountDelete(@RequestParam int recipe_num, HttpSession session) {
+		recipeService.deleteLikeCount(recipe_num);
+	}
+
+	//조회수 추가
+	@RequestMapping(value="/recipeHit.app")
+	public ModelAndView recipeHit(int recipe_num) {
+		ModelAndView mav = new ModelAndView();
+
+		recipeService.recipeHit(recipe_num);
+		mav.setViewName("JSON");
+
+		return mav ;						
+	}
+}
