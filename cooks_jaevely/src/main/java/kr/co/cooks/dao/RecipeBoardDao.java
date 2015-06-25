@@ -3,6 +3,7 @@ package kr.co.cooks.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import kr.co.cooks.vo.RecipeBoardUserVO;
 import kr.co.cooks.vo.RecipeBoardVO;
 import kr.co.cooks.vo.RecipeCommentVO;
 
@@ -12,16 +13,16 @@ public interface RecipeBoardDao {
 	public int getRecipeCount();
 	
 	//글 목록 가져오기
-	public List<RecipeBoardVO> getArticles(HashMap<String, Integer> rowHashMap);
+	public List<RecipeBoardUserVO> getArticles(HashMap<String, Integer> rowHashMap);
 	
 	//글 쓰기	
 	public void write(RecipeBoardVO recipeVO);
 	
 	//글읽기
-	public RecipeBoardVO content(int recipe_num);
+	public RecipeBoardUserVO content(int recipe_num);
 	
 	//수정 폼 가져오기
-	public RecipeBoardVO getUpdateRecipe(int recipe_num); 
+	public RecipeBoardUserVO getUpdateRecipe(int recipe_num); 
 	
 	//글 수정하기
 	public void update(RecipeBoardVO recipeVO);

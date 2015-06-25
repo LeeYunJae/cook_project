@@ -26,16 +26,9 @@ $(document).ready( function() {
 					recipe_num : $('#recipe_num').val(),
 					rcomment_content : $('#rcomment_content').val()
 				},
-				success : function(data) {
-					getComment(1);	
-				},
-				error : function(xhr) {
-					
-					alert("error html = " + xhr.statusText);
-				}	
 			});			
 		}
-		
+		getComment(1);
 	});	
 }); 
 
@@ -63,11 +56,11 @@ function getComment(commentPageNum)  {
 			var html = '';
 			var userId = $('#userId').val()
 			
-			$.each(data.commentVO, function(entryIndex, entry) {
+			$.each(data.recipeCommentUserVO, function(entryIndex, entry) {
 				var formatted_date = new Date(entry.rcomment_date);		
 	
 				html += '<div class="row">';
-				html += '<div class="col-md-2 col-sm-3 text-center">' + entry.id + '</div>';
+				html += '<div class="col-md-2 col-sm-3 text-center">' + entry.name + '</div>';
 				html += '<div class="col-md-10 col-sm-9">';
 				html += '<div class="panel" style="background: #F5F5F5">' + entry.rcomment_content;
 				
@@ -77,8 +70,6 @@ function getComment(commentPageNum)  {
 				{				
 					html += '<a onclick="recipeCommentDelete(' + entry.rcomment_num +')">댓글 삭제 </a>' ;
 				}
-				
-							
 				html += '</div>'
 				
 				html += '<div class="row">';
@@ -110,14 +101,9 @@ function recipeCommentDelete(comment_num) {
 		data : {
 			recipe_num : $('#recipe_num').val(),
 			rcomment_num : comment_num,		
-		},
-		success : function(data) {
-			getComment(1);			
-		},
-		error : function(xhr) {			
-			alert("error html = " + xhr.statusText);
-		}		
+		},	
 	});		
+	getComment(1);
 }
 
 //댓글달기 폼으로 포커스 이동

@@ -57,7 +57,7 @@
 				</div>
 				
 				<input type="hidden" id="pageNum " name="pageNum" value="${pageNum}">
-				<input type="hidden" id="recipe_num" value="${recipeVO.recipe_num}">
+				<input type="hidden" id="recipe_num" value="${recipeUserVO.recipe_num}">
 				<input type="hidden" id="userId" value="${loginUser.id}">
 				
 				<div class="col-sm-9 col-md-10 main">
@@ -74,10 +74,10 @@
 <!-- 여기가 글 읽기 폼 시작  -->
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h4>${recipeVO.recipe_title}</h4>
-							<label for="id">글쓴이 : </label> ${recipeVO.id} <br>
+							<h4>${recipeUserVO.recipe_title}</h4>
+							<label for="id">글쓴이 : </label> ${recipeUserVO.name} <br>
 						</div>
-						<div class="panel-body">${recipeVO.recipe_content}</div>
+						<div class="panel-body">${recipeUserVO.recipe_content}</div>
 						<div class="panel-footer">
 							<div id="inlineFooter">
 							<c:if test="${loginUser.id==null}">
@@ -98,8 +98,8 @@
 
 							<!-- 게시글 수정/게시글 삭제 버튼을 좋아요/댓글달기 와 같은줄에 오게하기위해 id값 주고 style에서 inline-block 해줌 -->
 							<div id="inlineFooter" style="float: right">
-								<c:if test="${loginUser.id==recipeVO.id}">
-								<a href="recipeUpdateForm.app?recipe_num=${recipeVO.recipe_num}&pageNum=${pageNum}">게시글 수정</a> .
+								<c:if test="${loginUser.id==recipeUserVO.id}">
+								<a href="recipeUpdateForm.app?recipe_num=${recipeUserVO.recipe_num}&pageNum=${pageNum}">게시글 수정</a> .
 								<!-- <a href="recipeDelete.app?recipe_num=${recipeVO.recipe_num}&pageNum=${pageNum}">게시글 삭제</a> . -->
 								<a onclick="clickRecipeDelete()">게시글 삭제</a> .
 								 

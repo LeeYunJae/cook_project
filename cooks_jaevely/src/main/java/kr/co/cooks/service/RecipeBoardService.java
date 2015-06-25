@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import kr.co.cooks.dao.RecipeBoardDao;
+import kr.co.cooks.vo.RecipeBoardUserVO;
 import kr.co.cooks.vo.RecipeBoardVO;
 import kr.co.cooks.vo.RecipeCommentVO;
 
@@ -18,7 +19,8 @@ public class RecipeBoardService {
 	RecipeBoardVO recipeVO;
 	
 	int count;	//총 글의 갯수
-	List<RecipeBoardVO> recipeList;
+	//List<RecipeBoardVO> recipeList;
+	List<RecipeBoardUserVO> recipeList;
 	List<RecipeCommentVO> recipeCommentList;
 	
 	public HashMap<String, Object> list(String pageNum) {
@@ -62,11 +64,11 @@ public class RecipeBoardService {
 		recipeDao.write(recipeVO);
 	}	
 	
-	public RecipeBoardVO content(int recipe_num) {
+	public RecipeBoardUserVO content(int recipe_num) {
 		return recipeDao.content(recipe_num);	
 	}
 	
-	public RecipeBoardVO getUpdateRecipe(int recipe_num) {
+	public RecipeBoardUserVO getUpdateRecipe(int recipe_num) {
 		return recipeDao.getUpdateRecipe(recipe_num);	
 	}
 	
@@ -77,10 +79,6 @@ public class RecipeBoardService {
 	public void delete(int recipe_num){
 		recipeDao.delete(recipe_num);		
 	}
-//	public String delete(int recipe_num, String pageNum){
-//		recipeDao.delete(recipe_num);	
-//		return  "redirect:/recipeList.app?pageNum=" + pageNum ;	
-//	}
 
 	public int getCommentCount(int recipe_num) {
 		return recipeDao.getCommentCount(recipe_num);

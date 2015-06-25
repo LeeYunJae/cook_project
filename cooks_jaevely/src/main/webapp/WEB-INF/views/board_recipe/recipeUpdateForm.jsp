@@ -67,22 +67,22 @@
 					<div class="well bs-component">
 
 						<form class="form-horizontal" action="recipeUpdate.app" method="post">
-						<input type="hidden" name="recipe_num" id="recipe_num" value="${recipeVO.recipe_num}">
+						<input type="hidden" name="recipe_num" id="recipe_num" value="${recipeUserVO.recipe_num}">
 						<input type="hidden" name="pageNum" id="pageNum" value="${pageNum}">
 							<div class="form-group">
-								<label for="id">글쓴이 : </label> ${recipeVO.id}
+								<label for="id">글쓴이 : </label> ${recipeUserVO.name}
 								<hr>
 								<!--  <input type="text" class="form-control" id="recipt_title" placeholder="제목을 입력하세요"> -->
 							</div>
 
 							<div class="form-group">
 								<label for="recipe_title">제 목</label> 
-								<input type="text" name="recipe_title" class="form-control" value="${recipeVO.recipe_title}">
+								<input type="text" name="recipe_title" class="form-control" value="${recipeUserVO.recipe_title}">
 							</div>
 
 							<div class="form-group">
 								<label for="recipe_content">내 용</label>
-								<textarea name="recipe_content" class="form-control" rows="10" cols="7">${recipeVO.recipe_content}</textarea>
+								<textarea name="recipe_content" class="form-control" rows="10" cols="7">${recipeUserVO.recipe_content}</textarea>
 							</div>
 							<br>
 

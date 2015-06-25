@@ -105,7 +105,7 @@
 										<a href="recipeContent.app?recipe_num=${recipe.recipe_num}&pageNum=${pageNum}">${recipe.recipe_title}</a>
 									</td>
 									<td>
-										<c:out value="${recipe.id}"></c:out>
+										<c:out value="${recipe.name}"></c:out>
 									</td>
 									<td>
 										<c:out value="${recipe.recipe_date}"></c:out>

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import kr.co.cooks.service.RecipeBoardService;
 import kr.co.cooks.vo.RecipeBoardVO;
 import kr.co.cooks.vo.UserVO;
+import kr.co.cooks.vo.RecipeBoardUserVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class RecipeBoardControl {
 	@Autowired RecipeBoardService recipeService ;
-	RecipeBoardVO recipeVO;	
+	
+	RecipeBoardVO recipeVO;
+	RecipeBoardUserVO recipeUserVO;
 
 	//글 목록(리스트)
 	@RequestMapping(value="/recipeList.app")
@@ -68,10 +71,11 @@ public class RecipeBoardControl {
 
 		int recipeCommentCount=0 ;
 
-		recipeVO=recipeService.content(recipe_num);
+		recipeUserVO=recipeService.content(recipe_num);
+		
 		recipeCommentCount=recipeService.getCommentCount(recipe_num);	//댓글 개수
 
-		mav.addObject("recipeVO", recipeVO);
+		mav.addObject("recipeUserVO", recipeUserVO);
 		mav.addObject("pageNum", pageNum);
 		mav.addObject("recipeCommentCount",recipeCommentCount);	
 
@@ -85,9 +89,9 @@ public class RecipeBoardControl {
 	public ModelAndView recipeUpdateForm(@RequestParam int recipe_num, @RequestParam String pageNum, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 
-		recipeVO=recipeService.getUpdateRecipe(recipe_num);
+		recipeUserVO=recipeService.getUpdateRecipe(recipe_num);
 
-		mav.addObject("recipeVO", recipeVO);
+		mav.addObject("recipeUserVO", recipeUserVO);
 		mav.addObject("pageNum", pageNum);
 
 		mav.setViewName("board_recipe/recipeUpdateForm");		

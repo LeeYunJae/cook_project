@@ -5,90 +5,104 @@
 <mapper namespace="kr.co.cooks.dao.RecipeBoardDao">
 
 	<select id="getRecipeCount" resultType="Integer">
-			select count(*) from RECIPE_BOARD
+		select count(*) from RECIPE_BOARD
 	</select>
-	
-	<select id="getArticles" parameterType="HashMap" resultType="recipeVO">
-		select * 
-		from (select rownum rm,human.* from 
-		     (select RECIPE_NUM, ID, RECIPE_TITLE, RECIPE_HIT, RECIPE_DATE, RECIPE_LIKE 
-		     from RECIPE_BOARD order by RECIPE_NUM desc) human) 		
+
+	<select id="getArticles" parameterType="HashMap" resultType="recipeBoardUserVO">
+		select *
+		from (select rownum rm, human.* from
+		(select r.RECIPE_NUM, r.ID, r.RECIPE_TITLE, r.RECIPE_HIT, r.RECIPE_DATE, r.RECIPE_LIKE, s.NAME
+		from RECIPE_BOARD r left outer join USERS s on r.id=s.id order by RECIPE_NUM desc) human)
 		where rm between #{startRow} and #{endRow}
 	</select>
-	
-	<insert id="write"  parameterType="recipeVO">
-	 	insert into RECIPE_BOARD values(recipe_seq.NEXTVAL, #{id}, #{recipe_title}, #{recipe_content}, sysdate, 0, 0)
+
+	<insert id="write" parameterType="recipeVO">
+		insert into RECIPE_BOARD values(recipe_seq.NEXTVAL, #{id}, #{recipe_title},
+		#{recipe_content}, sysdate, 0, 0)
 	</insert>
-	
-	<select id="content" parameterType="Integer" resultType="recipeVO">
-		select * from RECIPE_BOARD where recipe_num=#{recipe_num}
-	</select>
-	
-	<select id="getUpdateRecipe" parameterType="Integer" resultType="recipeVO">
-		<!-- select RECIPE_NUM, RECIPE_TITLE, RECIPE_CONTENT -->
-		select * 
-		from RECIPE_BOARD where recipe_num=#{recipe_num}
-	</select>
-	
-	<update id="update" parameterType="recipeVO">
-		update RECIPE_BOARD set recipe_title=#{recipe_title}, recipe_content= #{recipe_content}
+
+	<select id="content" parameterType="Integer" resultType="recipeBoardUserVO">
+		select r.RECIPE_NUM, r.ID, r.RECIPE_TITLE, r.RECIPE_CONTENT, r.RECIPE_DATE, r.RECIPE_HIT, r.RECIPE_LIKE, s.NAME
+		from RECIPE_BOARD r left outer join USERS s on r.id=s.id
+		where r.recipe_num=#{recipe_num}
+	</select>	
+
+	<select id="getUpdateRecipe" parameterType="Integer" resultType="recipeBoardUserVO">
+		select r.*, s.name
+		from RECIPE_BOARD r left outer join USERS s on r.id=s.id
 		where recipe_num=#{recipe_num}
+	</select>
+
+	<update id="update" parameterType="recipeVO">
+		update RECIPE_BOARD set
+		recipe_title=#{recipe_title}, recipe_content= #{recipe_content}
+		where
+		recipe_num=#{recipe_num}
 	</update>
-	
+
 	<delete id="delete" parameterType="Integer">
-		delete from RECIPE_BOARD where recipe_num=#{recipe_num}
+		delete from RECIPE_BOARD where
+		recipe_num=#{recipe_num}
 	</delete>
-	
+
 	<select id="getCommentCount" parameterType="Integer" resultType="Integer">
 		select count(*) from RECIPE_COMMENTS where recipe_num=#{recipe_num}
 	</select>
-	
+
 	<update id="addLike" parameterType="Integer">
-		update RECIPE_BOARD set recipe_like=recipe_like+1
+		update RECIPE_BOARD set
+		recipe_like=recipe_like+1
 		where recipe_num=#{recipe_num}
 	</update>
-	
+
 	<update id="minusLike" parameterType="Integer">
-		update RECIPE_BOARD set recipe_like=recipe_like-1
+		update RECIPE_BOARD set
+		recipe_like=recipe_like-1
 		where recipe_num=#{recipe_num}
 	</update>
-	
+
 	<select id="getRecipeLike" parameterType="Integer" resultType="Integer">
-		select recipe_like from RECIPE_BOARD  where recipe_num=#{recipe_num}
+		select recipe_like from RECIPE_BOARD where recipe_num=#{recipe_num}
 	</select>
-	
+
 	<insert id="addLikePeople" parameterType="HashMap">
-		insert into RECIPE_LIKE values(#{recipe_num}, #{id})  	
+		insert into RECIPE_LIKE
+		values(#{recipe_num}, #{id})
 	</insert>
-	
+
 	<delete id="minusLikePeople" parameterType="HashMap">
-		delete from RECIPE_LIKE
-		where recipe_num=#{recipe_num} and id=#{id} 	
+		delete from
+		RECIPE_LIKE
+		where recipe_num=#{recipe_num} and id=#{id}
 	</delete>
-	
+
 	<select id="checkLikePeople" parameterType="HashMap" resultType="Integer">
-	 	select count(*) from recipe_like
- 		where recipe_num=#{recipe_num} and id=#{id}
+		select count(*) from recipe_like
+		where recipe_num=#{recipe_num} and id=#{id}
 	</select>
-	
+
 	<delete id="likeDelete" parameterType="Integer">
 		delete from RECIPE_LIKE
 		where recipe_num=#{recipe_num}
 	</delete>
-	
-	<update id="deleteLikeCount"  parameterType="Integer">
-		update RECIPE_BOARD set recipe_like=0
+
+	<update id="deleteLikeCount" parameterType="Integer">
+		update RECIPE_BOARD
+		set recipe_like=0
 		where recipe_num=#{recipe_num}
 	</update>
-	
+
 	<update id="recipeHit" parameterType="Integer">
-		update RECIPE_BOARD set recipe_hit=recipe_hit+1
+		update RECIPE_BOARD set
+		recipe_hit=recipe_hit+1
 		where recipe_num=#{recipe_num}
 	</update>
-	
-	<select id="recipeAllCommentCount" parameterType="Integer" resultType="Integer">
+
+	<select id="recipeAllCommentCount" parameterType="Integer"
+		resultType="Integer">
 		select count(RCOMMENT_NUM) from RECIPE_COMMENTS
-		where recipe_num=#{recipe_num}
+		where
+		recipe_num=#{recipe_num}
 	</select>
-	
+
 </mapper>
