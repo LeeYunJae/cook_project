@@ -51,10 +51,7 @@
                         <a href="#">맛집</a>
                     </li>
                     <li>
-                        <a href="recipeList.app">커뮤니티</a>
-                    </li>
-                    <li>
-                        <a href="#">공지사항</a>
+                        <a href="freeList.app">커뮤니티</a>
                     </li>
                     <li>
                         <a href="reviewListView.app">음식후기</a>

@@ -15,6 +15,8 @@
 		<typeAlias alias="recipeCommentUserVO" type="kr.co.cooks.vo.RecipeCommentUserVO"/>
 		
 		<typeAlias alias="freeVO" type="kr.co.cooks.vo.FreeBoardVO"/>
+		<typeAlias alias="freeBoardUserVO" type="kr.co.cooks.vo.FreeBoardUserVO"/>
+		
 	</typeAliases>
 	
 </configuration>

@@ -49,7 +49,6 @@ public class RecipeBoardService {
 		//글이 없으면
 		else {			
 			recipeList = null ;
-			
 		}	
 		
 		hashMap.put("count",  count);	//총 글의 갯수

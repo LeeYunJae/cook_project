@@ -27,18 +27,6 @@ public class RecipeCommentControl {
 		
 		commentService.commentWrite(commentVO);		
 	}
-//	@RequestMapping(value="/recipeCommentWrite.app")
-//	public ModelAndView recipeCommentWrite(@ModelAttribute RecipeCommentVO commentVO, HttpSession session) {
-//		ModelAndView mav = new ModelAndView();	
-//		
-//		UserVO sessionVO = (UserVO)session.getAttribute("loginUser");		
-//		commentVO.setId(sessionVO.getId());
-//		
-//		mav.addObject("commentVO", commentService.commentWrite(commentVO));
-//		mav.setViewName("JSON");			
-//
-//		return mav ;		
-//	}
 	
 	//코멘트 읽기
 	@RequestMapping("/recipeCommentRead.app")
@@ -57,34 +45,10 @@ public class RecipeCommentControl {
 		
 		commentService.commentDelete(recipe_num, rcomment_num);		
 	}
-/*	@RequestMapping("/recipeCommentDelete.app")
-	public ModelAndView recipeCommentDelete(@RequestParam int recipe_num, int rcomment_num, HttpSession session) {
-		ModelAndView mav = new ModelAndView();
-				
-		mav.addObject("commentVO", commentService.commentDelete(recipe_num, rcomment_num));
-		mav.setViewName("JSON");
-		
-		return mav ;			
-	}*/
 	
 	//모든 코멘트 삭제
 	@RequestMapping(value="/recipeAllCommentDelete.app")
 	public void recipeAllCommentDelete(@RequestParam int recipe_num, HttpSession session) {
-		ModelAndView mav = new ModelAndView();
-
 		commentService.recipeAllCommentDelete(recipe_num);
-
-
-		
 	}
-//	@RequestMapping(value="/recipeAllCommentDelete.app")
-//	public ModelAndView recipeAllCommentDelete(@RequestParam int recipe_num, HttpSession session) {
-//		ModelAndView mav = new ModelAndView();
-//
-//		mav.addObject("recipeAllCommentDelete", commentService.recipeAllCommentDelete(recipe_num));
-//		mav.setViewName("JSON");
-//
-//		return mav ;
-//	}
-
 }
