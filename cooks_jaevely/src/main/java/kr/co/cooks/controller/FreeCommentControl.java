@@ -34,7 +34,6 @@ public class FreeCommentControl {
 		mav.setViewName("JSON");
 		
 		return mav;
-
 	}
 
 	//코멘트 읽기
