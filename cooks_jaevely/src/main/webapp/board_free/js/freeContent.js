@@ -1,7 +1,7 @@
 $(document).ready( function() {
 	
 	getComment(1);
-	//addHit();
+	addHit();
 	
 	commentPageNum = parseInt($("#commentPageNum").val());	//value=1
 	
@@ -21,9 +21,13 @@ $(document).ready( function() {
 					free_num : $('#free_num').val(),
 					fcomment_content : $('#fcomment_content').val()
 				},
+				success : function(data){
+					if(data.status=="success"){
+						getComment(1);						
+					}					
+				}
 			});			
 		}
-		getComment(1);
 	});	
 }); 
 
@@ -96,9 +100,13 @@ function freeCommentDelete(comment_num) {
 		data : {
 			free_num : $('#free_num').val(),
 			fcomment_num : comment_num,		
-		},	
+		},
+		success : function(data){
+			if(data.status=="success"){
+				getComment(1);						
+			}					
+		}
 	});		
-	getComment(1);
 }
 
 //댓글달기 폼으로 포커스 이동
@@ -106,7 +114,7 @@ function getFocus() {
 	document.getElementById("fcomment_content").focus();
 }
 
-/*
+
 //조회수 추가
 function addHit() {
 	$.ajax({
@@ -121,32 +129,4 @@ function addHit() {
 			alert("error html = " + xhr.statusText);
 		}		
 	});	
-}
-*/
-/**************************게시글 삭제 처리*************************************/
-
-//삭제버튼 눌리면
-function clickFreeDelete() {
-	
-	freeAllCommentDelete();
-	freeDelete();	
-}
-
-//모든 코멘트 삭제
-function freeAllCommentDelete() {
-	$.ajax({
-		type : "POST",
-		url : "freeAllCommentDelete.app",
-		async : true,
-		dataType : "json",
-		data : {
-			free_num : $('#free_num').val(),	
-		},
-		//success : alert("모든 코멘트 삭제"),	
-	});		
-}
-
-//글 삭제
-function freeDelete() {
-	location.href="freeDelete.app?free_num=" +  $('#free_num').val() + "&pageNum=" +  $('#pageNum').val();	
 }

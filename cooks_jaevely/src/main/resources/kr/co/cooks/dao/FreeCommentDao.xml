@@ -19,11 +19,5 @@
 	<delete id="commentDelete" parameterType="Integer">
 		delete from FREE_COMMENTS where fcomment_num=#{fcomment_num}
 	</delete>
-	
-	<delete id="freeAllCommentDelete" parameterType="Integer">
-		delete from FREE_COMMENTS
-		where free_num=#{free_num}
-	</delete>
-
 
 </mapper>

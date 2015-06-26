@@ -18,14 +18,21 @@ import org.springframework.web.servlet.ModelAndView;
 public class RecipeCommentControl {
 	@Autowired RecipeCommentService commentService;
 	
+	ModelAndView mav = new ModelAndView();
+	
 	//코멘트 쓰기
 	@RequestMapping(value="/recipeCommentWrite.app")
-	public void recipeCommentWrite(@ModelAttribute RecipeCommentVO commentVO, HttpSession session) {
+	public ModelAndView recipeCommentWrite(@ModelAttribute RecipeCommentVO commentVO, HttpSession session) {
 		
 		UserVO sessionVO = (UserVO)session.getAttribute("loginUser");		
 		commentVO.setId(sessionVO.getId());
 		
-		commentService.commentWrite(commentVO);		
+		commentService.commentWrite(commentVO);	
+		
+		mav.addObject("status", "success");
+		mav.setViewName("JSON");
+		
+		return mav;
 	}
 	
 	//코멘트 읽기
@@ -41,14 +48,13 @@ public class RecipeCommentControl {
 	
 	//코멘트 삭제
 	@RequestMapping("/recipeCommentDelete.app")
-	public void recipeCommentDelete(@RequestParam int recipe_num, int rcomment_num, HttpSession session) {
+	public ModelAndView recipeCommentDelete(@RequestParam int recipe_num, int rcomment_num, HttpSession session) {
 		
-		commentService.commentDelete(recipe_num, rcomment_num);		
-	}
-	
-	//모든 코멘트 삭제
-	@RequestMapping(value="/recipeAllCommentDelete.app")
-	public void recipeAllCommentDelete(@RequestParam int recipe_num, HttpSession session) {
-		commentService.recipeAllCommentDelete(recipe_num);
+		commentService.commentDelete(recipe_num, rcomment_num);	
+		
+		mav.addObject("status", "success");
+		mav.setViewName("JSON");
+		
+		return mav;
 	}
 }

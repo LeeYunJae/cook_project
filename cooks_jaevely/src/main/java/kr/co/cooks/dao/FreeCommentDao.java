@@ -17,7 +17,4 @@ public interface FreeCommentDao {
 	//코멘트 삭제
 	public void commentDelete(int free_num);
 
-	//모든 댓글 삭제
-	public void freeAllCommentDelete(int free_num);
-
 }

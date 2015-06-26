@@ -14,17 +14,9 @@ import org.springframework.stereotype.Service;
 public class RecipeCommentService {
 	@Autowired RecipeCommentDao commentDao ;
 	
-//	public List<RecipeCommentVO> commentWrite(RecipeCommentVO commentVO) {		
-//		
-//		commentDao.commentWrite(commentVO);			
-//		
-//		return commentRead(commentVO.getRecipe_num(), 10);
-//	}
 	public void commentWrite(RecipeCommentVO commentVO) {		
 		
 		commentDao.commentWrite(commentVO);			
-		
-		//return commentRead(commentVO.getRecipe_num(), 10);
 	}
 	
 	public List<RecipeCommentUserVO> commentRead(int recipe_num, int endRow) {
@@ -36,16 +28,11 @@ public class RecipeCommentService {
 		return commentDao.commentRead(hashMap);
 	}
 	
-//	public List<RecipeCommentVO> commentDelete(int recipe_num, int rcomment_num){
-//		commentDao.commentDelete(rcomment_num);
-//		
-//		return commentRead(recipe_num, 10);
-//	}
 	public void commentDelete(int recipe_num, int rcomment_num){
 		commentDao.commentDelete(rcomment_num);
 	}
 	
-	public void recipeAllCommentDelete(int recipe_num) {
-		commentDao.recipeAllCommentDelete(recipe_num);
-	}
+//	public void recipeAllCommentDelete(int recipe_num) {
+//		commentDao.recipeAllCommentDelete(recipe_num);
+//	}
 }

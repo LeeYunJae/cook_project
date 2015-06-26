@@ -10,6 +10,7 @@ import kr.co.cooks.vo.RecipeCommentVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -75,8 +76,11 @@ public class RecipeBoardService {
 		recipeDao.update(recipeVO);
 	}
 	
+	@Transactional
 	public void delete(int recipe_num){
-		recipeDao.delete(recipe_num);		
+		recipeDao.likeDelete(recipe_num);			//글에 눌렸던 좋아요 삭제
+		recipeDao.recipeAllCommentDelete(recipe_num);	//모든 코멘트 삭제
+		recipeDao.delete(recipe_num);				//글 삭제	
 	}
 
 	public int getCommentCount(int recipe_num) {
@@ -109,14 +113,6 @@ public class RecipeBoardService {
 	
 	public int checkLikePeople(HashMap<String, Object> hashMap) {		
 		return recipeDao.checkLikePeople(hashMap) ;	
-	}
-	
-	public void likeDelete(int recipe_num) {
-		recipeDao.likeDelete(recipe_num);	
-	}
-	
-	public void deleteLikeCount(int recipe_num) {
-		recipeDao.deleteLikeCount(recipe_num);	
 	}
 	
 	public void recipeHit(int recipe_num) {

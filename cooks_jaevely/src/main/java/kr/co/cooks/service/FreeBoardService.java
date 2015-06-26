@@ -9,7 +9,7 @@ import kr.co.cooks.vo.FreeBoardVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class FreeBoardService {
@@ -65,7 +65,21 @@ public class FreeBoardService {
 		return freeDao.getCommentCount(free_num);
 	}
 	
+	public FreeBoardUserVO getUpdateFree(int free_num) {
+		return freeDao.getUpdateFree(free_num);	
+	}
+	
+	public void update(FreeBoardVO freeVO) {
+		freeDao.update(freeVO);
+	}
+	
+	@Transactional
 	public void delete(int free_num){
+		freeDao.freeAllCommentDelete(free_num);		
 		freeDao.delete(free_num);		
+	}
+	
+	public void freeHit(int free_num) {
+		freeDao.freeHit(free_num);
 	}
 }

@@ -4,11 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import kr.co.cooks.dao.FreeCommentDao;
-import kr.co.cooks.dao.RecipeCommentDao;
 import kr.co.cooks.vo.FreeCommentUserVO;
 import kr.co.cooks.vo.FreeCommentVO;
-import kr.co.cooks.vo.RecipeCommentUserVO;
-import kr.co.cooks.vo.RecipeCommentVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,9 +31,4 @@ public class FreeCommentService {
 	public void commentDelete(int fcomment_num){
 		freeDao.commentDelete(fcomment_num);
 	}
-
-	public void freeAllCommentDelete(int free_num) {
-		freeDao.freeAllCommentDelete(free_num);
-	}
-
 }

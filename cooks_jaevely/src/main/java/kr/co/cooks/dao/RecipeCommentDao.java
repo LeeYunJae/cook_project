@@ -15,7 +15,4 @@ public interface RecipeCommentDao {
 	
 	//코멘트 삭제
 	public void commentDelete(int rcomment_num);
-	
-	//모든 댓글 삭제
-	public void recipeAllCommentDelete(int recipe_num);
 }

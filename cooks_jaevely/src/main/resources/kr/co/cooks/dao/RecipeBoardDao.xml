@@ -71,8 +71,7 @@
 	</insert>
 
 	<delete id="minusLikePeople" parameterType="HashMap">
-		delete from
-		RECIPE_LIKE
+		delete from RECIPE_LIKE
 		where recipe_num=#{recipe_num} and id=#{id}
 	</delete>
 
@@ -86,12 +85,6 @@
 		where recipe_num=#{recipe_num}
 	</delete>
 
-	<update id="deleteLikeCount" parameterType="Integer">
-		update RECIPE_BOARD
-		set recipe_like=0
-		where recipe_num=#{recipe_num}
-	</update>
-
 	<update id="recipeHit" parameterType="Integer">
 		update RECIPE_BOARD set
 		recipe_hit=recipe_hit+1
@@ -101,8 +94,12 @@
 	<select id="recipeAllCommentCount" parameterType="Integer"
 		resultType="Integer">
 		select count(RCOMMENT_NUM) from RECIPE_COMMENTS
-		where
-		recipe_num=#{recipe_num}
+		where recipe_num=#{recipe_num}
 	</select>
+	
+	<delete id="recipeAllCommentDelete" parameterType="Integer">
+		delete from RECIPE_COMMENTS
+		where recipe_num=#{recipe_num}
+	</delete>
 
 </mapper>

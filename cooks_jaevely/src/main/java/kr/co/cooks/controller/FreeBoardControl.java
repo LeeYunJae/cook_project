@@ -26,7 +26,7 @@ public class FreeBoardControl {
 	private static final Logger logger = LoggerFactory.getLogger(LoginControl.class);
 
 	@Autowired FreeBoardService freeService ;
-	
+
 	FreeBoardUserVO freeUserVO;
 
 	//글 목록(리스트)
@@ -72,7 +72,7 @@ public class FreeBoardControl {
 	@RequestMapping(value="/freeContent.app")
 	public ModelAndView freeContent(@RequestParam int free_num, @RequestParam String pageNum, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		
+
 		int freeCommentCount=0 ;
 
 		freeUserVO=freeService.content(free_num);
@@ -87,26 +87,48 @@ public class FreeBoardControl {
 		return mav ;
 	}
 
+	//글 수정 폼
+	@RequestMapping(value="/freeUpdateForm.app")
+	public ModelAndView freeUpdateForm(@RequestParam int free_num, @RequestParam String pageNum, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+
+		freeUserVO=freeService.getUpdateFree(free_num);
+
+		mav.addObject("freeUserVO", freeUserVO);
+		mav.addObject("pageNum", pageNum);
+
+		mav.setViewName("board_free/freeUpdateForm");		
+
+		return mav ;		
+	}
+
+	//글 수정
+	@RequestMapping(value="/freeUpdate.app")
+	public String freeUpdate(@ModelAttribute  FreeBoardVO freeVO, @RequestParam String pageNum) {
+
+		freeService.update(freeVO);
+
+		return "redirect:/freeContent.app?free_num="+freeVO.getFree_num() +"&pageNum=" + pageNum ;	
+	}
+
 	//글 삭제
 	@RequestMapping(value="/freeDelete.app")
-	public String freeDelete(@RequestParam int free_num, @RequestParam String pageNum) {
-
-		System.out.println("글삭제");
+	public String freeDelete(@RequestParam int free_num) {
 
 		freeService.delete(free_num);
 
-		return "redirect:/freeList.app?pageNum=" + pageNum ;	
+		return "redirect:/freeList.app?pageNum=" + 1 ;	
 	}
 
 	//조회수 추가
-//	@RequestMapping(value="/freeHit.app")
-//	public ModelAndView freeHit(int free_num) {
-//		ModelAndView mav = new ModelAndView();
-//
-//		freeService.freeHit(free_num);
-//		mav.setViewName("JSON");
-//
-//		return mav ;						
-//	}
+	@RequestMapping(value="/freeHit.app")
+	public ModelAndView freeHit(int free_num) {
+		ModelAndView mav = new ModelAndView();
+
+		freeService.freeHit(free_num);
+		mav.setViewName("JSON");
+
+		return mav ;						
+	}
 
 }

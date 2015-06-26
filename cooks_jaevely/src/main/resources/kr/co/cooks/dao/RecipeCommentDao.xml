@@ -8,13 +8,6 @@
 		insert into RECIPE_COMMENTS values(comment_seq.NEXTVAL, #{id}, #{rcomment_content}, sysdate, #{recipe_num})
 	</insert>
 	
-	<!-- <select id="commentRead" parameterType="HashMap" resultType="commentVO">
-		select * from (select rownum rm, human.* from 
-		(select * from RECIPE_COMMENTS where recipe_num=#{recipe_num}
-		order by rcomment_num) human) 
-		where rm between 1 and #{endRow}
-	</select> -->
-	
 	<select id="commentRead" parameterType="HashMap" resultType="recipeCommentUserVO">
 		select * from (select rownum rm, human.* from 
 		(select r.*, s.name 
@@ -26,9 +19,5 @@
 	<delete id="commentDelete" parameterType="Integer">
 		delete from RECIPE_COMMENTS where rcomment_num=#{rcomment_num}
 	</delete>
-	
-	<delete id="recipeAllCommentDelete" parameterType="Integer">
-		delete from RECIPE_COMMENTS
-		where recipe_num=#{recipe_num}
-	</delete>
+
 </mapper>

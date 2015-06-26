@@ -95,7 +95,7 @@
 							<div id="inlineFooter" style="float: right">
 								<c:if test="${loginUser.id==freeUserVO.id}">
 								<a href="freeUpdateForm.app?free_num=${freeUserVO.free_num}&pageNum=${pageNum}">게시글 수정</a> .
-								<a onclick="clickFreeDelete()">게시글 삭제</a> .
+								<a href="freeDelete.app?free_num=${freeUserVO.free_num}">게시글 삭제</a> .
 								 
 							</c:if>
 							<a href="freeList.app?pageNum=${pageNum}">목록으로</a>

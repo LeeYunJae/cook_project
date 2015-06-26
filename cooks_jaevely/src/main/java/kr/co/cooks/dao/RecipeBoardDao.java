@@ -63,6 +63,9 @@ public interface RecipeBoardDao {
 	//조회수 
 	public void recipeHit(int recipe_num);
 	
+	//모든 댓글 삭제
+	public void recipeAllCommentDelete(int recipe_num);
+	
 	//모든 댓글 수
 	public int recipeAllCommentCount(int recipe_num);
 

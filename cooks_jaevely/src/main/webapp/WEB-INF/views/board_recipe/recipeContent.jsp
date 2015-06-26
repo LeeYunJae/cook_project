@@ -100,8 +100,8 @@
 							<div id="inlineFooter" style="float: right">
 								<c:if test="${loginUser.id==recipeUserVO.id}">
 								<a href="recipeUpdateForm.app?recipe_num=${recipeUserVO.recipe_num}&pageNum=${pageNum}">게시글 수정</a> .
-								<!-- <a href="recipeDelete.app?recipe_num=${recipeVO.recipe_num}&pageNum=${pageNum}">게시글 삭제</a> . -->
-								<a onclick="clickRecipeDelete()">게시글 삭제</a> .
+								<a href="recipeDelete.app?recipe_num=${recipeUserVO.recipe_num}">게시글 삭제</a> .
+								
 								 
 							</c:if>
 							<a href="recipeList.app?pageNum=${pageNum}">목록으로</a>
@@ -120,7 +120,7 @@
 
 						<form class="form-horizontal" role="form">
 							<div class="form-group" style="padding: 14px;">
-						<!-- 댓글 입력 창 -->
+						
 							<textarea class="form-control" id="rcomment_content" name="rcomment_content" placeholder="댓글을 입력하세요!"></textarea>
 							</div>
 							<c:if test="${loginUser.id==null}">

@@ -26,13 +26,19 @@ public interface FreeBoardDao {
 	public int getCommentCount(int free_num);
 	
 	//수정 폼 가져오기
-	public FreeBoardUserVO getUpdateRecipe(int free_num); 
+	public FreeBoardUserVO getUpdateFree(int free_num); 
 
 	//글 수정하기
-	public void update(RecipeBoardVO freeVO);
+	public void update(FreeBoardVO freeVO);
 
+	//모든 댓글 삭제
+	public void freeAllCommentDelete(int free_num);
+		
 	//글 삭제하기
 	public void delete(int free_num);
+	
+	//조회수
+	public void freeHit(int free_num);
 	
 
 
