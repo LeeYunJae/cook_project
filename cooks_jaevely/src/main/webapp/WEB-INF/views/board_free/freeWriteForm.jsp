@@ -50,6 +50,7 @@
 					<ul class="nav nav-sidebar" style="margin-top: 15px;">
 						<li class="active"><a href="#">자유게시판</a></li>
 						<li><a href="#">나만 아는 레시피</a></li>
+						<li><a href="#">공지사항</a></li>
 					</ul>
 
 				</div>

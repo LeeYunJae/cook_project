@@ -19,6 +19,15 @@ header.carousel .fill {
     background-position: center;
     background-size: cover;
 }
+
+.slogan {
+    padding-top: 400px;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover
+    
+}
 .input-group .form-control-search{
 	position: relative;
   	z-index: 2;

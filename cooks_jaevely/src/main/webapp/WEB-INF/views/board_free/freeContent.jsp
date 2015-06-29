@@ -52,6 +52,7 @@
 					<ul class="nav nav-sidebar" style="margin-top: 15px;">
 						<li class="active"><a href="freeList.app">자유게시판</a></li>
 						<li><a href="recipeList.app">나만 아는 레시피</a></li>
+						<li><a href="#">공지사항</a></li>
 					</ul>
 
 				</div>
@@ -108,7 +109,7 @@
 							<input type="hidden" id="commentPageNum" value="1">
 			
 
-						<!-- 기존에 있는 코멘트 읽어오기 -->			
+						<!-- 코멘트 읽어오기 -->			
 						 <div id="show_comment"></div>						
 			
 

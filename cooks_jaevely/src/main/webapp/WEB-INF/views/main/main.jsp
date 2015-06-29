@@ -46,7 +46,7 @@
 		</ol>
 		<div class="carousel-inner">
 			<div class="item active">
-				<div class="fill" style="background-image: url('main/images/salad.jpg');"></div>
+				<div class="slogan" style="background-image: url('main/images/slogan.png');"></div>
 			</div>
 			<div class="item">
 				<div class="fill" style="background-image: url('main/images/steak.jpg');"></div>

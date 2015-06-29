@@ -17,6 +17,10 @@
 		<typeAlias alias="freeVO" type="kr.co.cooks.vo.FreeBoardVO"/>
 		<typeAlias alias="freeBoardUserVO" type="kr.co.cooks.vo.FreeBoardUserVO"/>
 		
+		<typeAlias alias="foodVO" type="kr.co.cooks.vo.FoodVO"/>
+		
+		
+		
 	</typeAliases>
 	
 </configuration>

@@ -26,7 +26,7 @@
     <script src="js/bootstrap.min.js"></script>
 	<!-- Custom JS -->
     <script src="common/js/common.js"></script>
-    <script src="user/user.js"></script>
+    <script src="user/js/user.js"></script>
 
 </head>
 <body>

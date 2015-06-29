@@ -51,6 +51,7 @@
 					<ul class="nav nav-sidebar" style="margin-top: 15px;">
 						<li><a href="freeList.app">자유게시판</a></li>
 						<li class="active"><a href="recipeList.app">나만 아는 레시피</a></li>
+						<li><a href="#">공지사항</a></li>
 					</ul>
 
 				</div>

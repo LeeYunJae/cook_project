@@ -50,6 +50,7 @@
 					<ul class="nav nav-sidebar" style="margin-top: 15px;">
 						<li class="active"><a href="freeList.app">자유게시판</a></li>
 						<li><a href="recipeList.app">나만 아는 레시피</a></li>
+						<li><a href="#">공지사항</a></li>
 					</ul>
 
 				</div>
@@ -147,11 +148,8 @@
 			</div>
 		</footer>
 
-	</div>
-	<!-- /.container -->
-
-
-  	<div id="writeForm_Modal"></div>  
+	</div> <!-- /.container -->
+	
   <jsp:include page="../common/sign_modal.jsp"/>
 
 </body>
