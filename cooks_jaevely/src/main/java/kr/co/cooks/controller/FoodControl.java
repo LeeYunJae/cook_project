@@ -2,11 +2,13 @@ package kr.co.cooks.controller;
 
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import kr.co.cooks.service.FoodService;
+import kr.co.cooks.vo.FoodMainFileListMapVO;
 import kr.co.cooks.vo.FoodVO;
 
 import org.slf4j.Logger;
@@ -26,15 +28,18 @@ public class FoodControl {
 	@Autowired FoodService foodService ;
 
 	FoodVO foodVO ;
+	FoodMainFileListMapVO foodFileMapVO ;
 
 	//음식 상세정보 가져오기
 	@RequestMapping(value="/getFoodDetail.app")
 	public ModelAndView getFoodDetail(@RequestParam int f_num, HttpSession session) {		
 		ModelAndView mav = new ModelAndView();
 
-		foodVO = foodService.getFoodDetail(f_num) ;
+		foodFileMapVO = foodService.getFoodDetail(f_num) ;
+		HashMap<String, Object> hashMap=foodService.getFoodFiles(f_num);
 
-		mav.addObject("foodVO", foodVO);		
+		mav.addObject("foodFileMapVO", foodFileMapVO);
+		mav.addObject("foodFilesList", hashMap.get("foodFilesList"));
 		mav.setViewName("food/food_detail");
 
 		return mav;
@@ -48,6 +53,7 @@ public class FoodControl {
 		HashMap<String, Object> hashMap= foodService.list(r_num);
 		
 		
+		mav.addObject("r_num", r_num);
 		mav.addObject("foodFileList", hashMap.get("foodFileList"));
 		mav.setViewName("food/food_list");
 		
@@ -60,8 +66,8 @@ public class FoodControl {
 		ModelAndView mav = new ModelAndView();
 		
 		mav.addObject("r_num", r_num);
-
 		mav.setViewName("food/food_addForm");
+		
 		return mav;
 	}
 

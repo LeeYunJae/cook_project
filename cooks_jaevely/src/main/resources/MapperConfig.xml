@@ -18,8 +18,11 @@
 		<typeAlias alias="freeBoardUserVO" type="kr.co.cooks.vo.FreeBoardUserVO"/>
 		
 		<typeAlias alias="foodVO" type="kr.co.cooks.vo.FoodVO"/>
+		<typeAlias alias="foodMainFileVO" type="kr.co.cooks.vo.FoodMainFileListVO"/>
+		<typeAlias alias="foodMainFileMapVO" type="kr.co.cooks.vo.FoodMainFileListMapVO"/>
 		<typeAlias alias="foodFileVO" type="kr.co.cooks.vo.FoodFileListVO"/>
-		<typeAlias alias="foodFileMapVO" type="kr.co.cooks.vo.FoodFileListMapVO"/>
+
+		
 		
 		
 		

@@ -5,24 +5,24 @@
 <mapper namespace="kr.co.cooks.dao.FreeBoardDao">
 
 	<select id="getfreeCount" resultType="Integer">
-		select count(*) from F_BOARD
+		select count(*) from FREE_BOARD
 	</select>
 	
 	<select id="getArticles" parameterType="HashMap" resultType="freeBoardUserVO">
 		select *
 		from (select rownum rm, human.* from
 		(select f.FREE_NUM, f.ID, f.FREE_TITLE, f.FREE_HIT, f.FREE_DATE, s.NAME
-		from F_BOARD f left outer join USERS s on f.id=s.id order by FREE_NUM desc) human)
+		from FREE_BOARD f left outer join USERS s on f.id=s.id order by FREE_NUM desc) human)
 		where rm between #{startRow} and #{endRow}
 	</select>
 	
 	<insert id="write" parameterType="freeVO">
-		insert into F_BOARD values(free_seq.NEXTVAL, #{id}, #{free_title}, #{free_content}, sysdate, 0)
+		insert into FREE_BOARD values(free_seq.NEXTVAL, #{id}, #{free_title}, #{free_content}, sysdate, 0)
 	</insert>
 	
 	<select id="content" parameterType="Integer" resultType="freeBoardUserVO">
 		select f.FREE_NUM, f.ID, f.FREE_TITLE, f.FREE_CONTENT, f.FREE_DATE, f.FREE_HIT, s.NAME
-		from F_BOARD f left outer join USERS s on f.id=s.id 
+		from FREE_BOARD f left outer join USERS s on f.id=s.id 
 		where f.free_num=#{free_num}
 	</select>	
 	
@@ -32,12 +32,12 @@
 	
 	<select id="getUpdateFree" parameterType="Integer" resultType="freeBoardUserVO">
 		select f.*, s.name
-		from F_BOARD f left outer join USERS s on f.id=s.id
+		from FREE_BOARD f left outer join USERS s on f.id=s.id
 		where free_num=#{free_num}
 	</select>
 	
 	<update id="update" parameterType="freeVO">
-		update F_BOARD set free_title=#{free_title}, free_content= #{free_content}
+		update FREE_BOARD set free_title=#{free_title}, free_content= #{free_content}
 		where free_num=#{free_num}
 	</update>
 	
@@ -47,12 +47,12 @@
 	</delete>
 	
 	<delete id="delete" parameterType="Integer">
-		delete from F_BOARD 
+		delete from FREE_BOARD 
 		where free_num=#{free_num}
 	</delete>
 	
 	<update id="freeHit" parameterType="Integer">
-		update F_BOARD set
+		update FREE_BOARD set
 		free_hit=free_hit+1
 		where free_num=#{free_num}
 	</update>

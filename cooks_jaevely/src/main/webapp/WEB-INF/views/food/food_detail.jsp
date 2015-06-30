@@ -60,11 +60,11 @@
 <body>
 	<jsp:include page="../common/navTop.jsp" />
 
-	<input type="hidden" id="f_num" value="${foodVO.f_num}">
+	<input type="hidden" id="f_num" value="${foodFileMapVO.f_num}">
 	<input type="hidden" id="userId" value="${loginUser.id}">
-	<input type="hidden" id="f_recipe" value="${foodVO.f_recipe}">
-	<input type="hidden" id="f_origin" value="${foodVO.f_origin}">
-	<input type="hidden" id="f_ingredients" value="${foodVO.f_ingredients}">
+	<input type="hidden" id="f_recipe" value="${foodFileMapVO.f_recipe}">
+	<input type="hidden" id="f_origin" value="${foodFileMapVO.f_origin}">
+	<input type="hidden" id="f_ingredients" value="${foodFileMapVO.f_ingredients}">
 	
 
 	<!-- Page Content -->
@@ -72,18 +72,18 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6">
-				<img class="img-responsive" src="food/images/makguksu.jpg" alt="">
+				<img class="img-responsive" src="fileUpload/${foodFileMapVO.saveFileName}" alt="">
 			</div>
 			<div class="menu-info">
-				<h1>${foodVO.f_name}</h1>
+				<h1>${foodFileMapVO.f_name}</h1>
 				<table class="menuinfo-text">
 					<tr>
 						<td>가격</td>
-						<td>${foodVO.f_price}원</td>
+						<td>${foodFileMapVO.f_price}원</td>
 					</tr>
 					<tr>
 						<td>마일리지</td>
-						<td><c:out value="${foodVO.f_price*0.05}"></c:out>(5%)</td>
+						<td><c:out value="${foodFileMapVO.f_price*0.05}"></c:out>(5%)</td>
 
 					</tr>
 					<tr>
@@ -114,8 +114,12 @@
 				<!-- 사진부분 -->
 				
 				<img src="food/images/slogan1.png" alt="slogan" id="slogan" align="middle"><br><br>
-				<img src="food/images/makguksu.jpg" alt="makguksu" id="makguksu" align="middle">
-
+				
+				<c:forEach var="files" items="${foodFilesList}">
+				<img class="img-responsive" src="fileUpload/${files.saveFileName}" alt="">
+					<br>
+				</c:forEach>
+				
 				
 			</div>
 			<div class="row">
@@ -126,7 +130,7 @@
 					<div class="recipe">
 
 						<br>
-						<h3 id="howToCook">${foodVO.f_name}만드는 법</h3><br>
+						<h3 id="howToCook">${foodFileMapVO.f_name}만드는 법</h3><br>
 
 						<div class="form-group">
 							<label for="foodName" class="col-sm-1 control-label">재료</label>
@@ -154,8 +158,13 @@
 					<h3>상세정보</h3>
 					<div class="product-list-text">
 						<p style="font-size: 20px;">유통기간</p>
-						<p>${foodVO.f_ex_date} </p>
+						<p>${foodFileMapVO.f_ex_date} </p>
 					</div>
+					<div class="product-list-text">
+						<p style="font-size: 20px;">보관방법</p>
+						<p>${foodFileMapVO.f_store} </p>
+					</div>
+					
 				</div>
 				
 				<div class="col-md-12">

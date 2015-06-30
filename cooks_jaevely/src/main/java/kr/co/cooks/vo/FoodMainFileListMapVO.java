@@ -1,17 +1,18 @@
 package kr.co.cooks.vo;
 
 
-public class FoodVO {
+public class FoodMainFileListMapVO {
 	private int f_num;				//음식 번호
 	private String f_name ;			//음식 이름
 	private int f_price;			//가격
-	private String f_ex_date;		//유통기한
 	private String f_recipe;		//레시피
+	private String f_ex_date;		//유통기한
 	private String f_ingredients;	//원재료명
 	private String f_origin;		//원산지명
 	private String f_store;			//보관방법
 	private int f_count;			//매출량
 	private String r_num;			//사업자 등록번호
+	private String saveFileName;	//저장된 파일 이름
 	
 	
 	public int getF_num() {
@@ -74,14 +75,21 @@ public class FoodVO {
 	public void setR_num(String r_num) {
 		this.r_num = r_num;
 	}
+	public String getSaveFileName() {
+		return saveFileName;
+	}
+	public void setSaveFileName(String saveFileName) {
+		this.saveFileName = saveFileName;
+	}
 	
 	
 	@Override
 	public String toString() {
-		return "FoodVO [f_num=" + f_num + ", f_name=" + f_name + ", f_price="
-				+ f_price + ", f_recipe=" + f_recipe + ", f_ex_date="
-				+ f_ex_date + ", f_ingredients=" + f_ingredients
-				+ ", f_origin=" + f_origin + ", f_store=" + f_store
-				+ ", f_count=" + f_count + ", r_num=" + r_num + "]";
+		return "FoodFileListMapVO [f_num=" + f_num + ", f_name=" + f_name
+				+ ", f_price=" + f_price + ", f_recipe=" + f_recipe
+				+ ", f_ex_date=" + f_ex_date + ", f_ingredients="
+				+ f_ingredients + ", f_origin=" + f_origin + ", f_store="
+				+ f_store + ", f_count=" + f_count + ", r_num=" + r_num
+				+ ", saveFileName=" + saveFileName + "]";
 	}
 }

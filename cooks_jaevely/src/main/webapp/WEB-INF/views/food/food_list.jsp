@@ -64,6 +64,7 @@
 						title="Email">E:</abbr> <a href="mailto:#">name@example.com</a>
 				</address>
 			</div>
+			<a href="addFoodForm.app?r_num=${r_num}">음식 추가하기</a>
 		</div>
 		<!-- /.row -->
 

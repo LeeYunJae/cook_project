@@ -55,7 +55,7 @@
 
 			<div class="well bs-component">
 
-				<form class="form-horizontal" id="detailForm" name="detailForm" action="/cooks/addFood.app" method="post" enctype="multipart/form-data">
+				<form class="form-horizontal" id="detailForm" name="detailForm" action="addFood.app" method="post" enctype="multipart/form-data">
 				
 				<input type="hidden" id="f_recipe" name="f_recipe" value="">
 				<input type="hidden" id="f_ingredients" name="f_ingredients" value="">
@@ -92,13 +92,9 @@
 					</div>
 					<label class="col-sm-2"></label>
 					<button type="button" onclick="addRecipe()">레시피 단계 추가</button>
-				
-				
-				
 
 				<br>
 				<br>
-
 
 
 					<div class="form-group" id="addClass">
@@ -123,7 +119,7 @@
 					<div class="form-group">
 						<label for="ex_date" class="col-sm-2 control-label" >유통기한</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="ex_date">
+							<input type="text" class="form-control" id="f_ex_date" name="f_ex_date" placeholder="예시)제조일로부터 3일">
 						</div>
 					</div>
 					<div class="form-group">
@@ -142,7 +138,7 @@
 					<div class="form-group">
 						<label for="foodPic" class="col-sm-2 control-label">음식사진</label>
 						<div class="col-sm-4">
-							<input type="file" name="food_files" multiple>
+							<input type="file" id="food_files" name="food_files" multiple>
 						</div>
 					</div>
 

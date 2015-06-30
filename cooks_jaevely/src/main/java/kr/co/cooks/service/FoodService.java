@@ -8,8 +8,9 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 import kr.co.cooks.dao.FoodDao;
-import kr.co.cooks.vo.FoodFileListMapVO;
+import kr.co.cooks.vo.FoodMainFileListMapVO;
 import kr.co.cooks.vo.FoodFileListVO;
+import kr.co.cooks.vo.FoodMainFileListVO;
 import kr.co.cooks.vo.FoodVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +24,21 @@ public class FoodService {
 	@Autowired FoodDao foodDao ;
 	@Autowired ServletContext servletContext;
 	
-	List<FoodFileListMapVO> foodFileList;
+	List<FoodMainFileListMapVO> foodFileList;
+	List<FoodFileListVO> foodFilesList;
 
-	public FoodVO getFoodDetail(int f_num) {
+	public FoodMainFileListMapVO getFoodDetail(int f_num) {
 		return foodDao.getFoodDetail(f_num);
+	}
+	
+	public HashMap<String, Object> getFoodFiles(int f_num){
+		HashMap<String, Object> hashMap = new HashMap<>();
+		
+		foodFilesList = foodDao.getFoodFiles(f_num);
+		
+		hashMap.put("foodFilesList", foodFilesList);	//음식이 들어있는 list
+
+		return hashMap;
 	}
 
 	public HashMap<String, Object> list(String r_num) {
@@ -49,13 +61,10 @@ public class FoodService {
 		return hashMap;
 	}
 
-	//	public void addFood(HashMap<String, Object> hashMap) {
-	//		foodDao.addFood(hashMap);
-	//	}
-
 	@Transactional()
 	public void addFood(FoodVO foodVO, MultipartHttpServletRequest multipartReq) {
 		
+		//음식 등록
 		foodDao.addFood(foodVO);
 
 
@@ -83,12 +92,13 @@ public class FoodService {
 						saveFileName = originFileName + "_" +System.currentTimeMillis();
 					}
 
-					FoodFileListVO foodFileVO = new FoodFileListVO();
-					foodFileVO.setOriginFileName(originFileName);
-					foodFileVO.setSaveFileName(saveFileName);
-					foodFileVO.setFileSize(fileSize);
+					FoodMainFileListVO foodMainFileVO = new FoodMainFileListVO();
+					foodMainFileVO.setOriginFileName(originFileName);
+					foodMainFileVO.setSaveFileName(saveFileName);
+					foodMainFileVO.setFileSize(fileSize);
 					
-					foodDao.addFoodFileUpload(foodFileVO);
+					//메인사진 등록
+					foodDao.addFoodMainFile(foodMainFileVO);
 					
 					try{
 						uploadFile.transferTo(new File(fileUploadRealPath + "/" + saveFileName));
@@ -97,10 +107,44 @@ public class FoodService {
 					} // catch
 				}
 
-
 			}
 
 		}
+		
+		if(multipartReq.getFiles("food_files")!=null) {
+
+
+			List<MultipartFile> multiFile = multipartReq.getFiles("food_files");
+			Iterator<MultipartFile> iterator = multiFile.iterator();
+
+			while(iterator.hasNext()) {
+				MultipartFile uploadFile = iterator.next();
+				String originFileName = uploadFile.getOriginalFilename();
+				String saveFileName = originFileName;
+				long fileSize = uploadFile.getSize();
+
+				if(!originFileName.isEmpty()) {
+					if(new File(fileUploadRealPath + "/" + originFileName).exists()) {
+						saveFileName = originFileName + "_" +System.currentTimeMillis();
+					}
+
+					FoodFileListVO foodFileVO = new FoodFileListVO();
+					foodFileVO.setOriginFileName(originFileName);
+					foodFileVO.setSaveFileName(saveFileName);
+					foodFileVO.setFileSize(fileSize);
+					
+					//메뉴 사진들 등록
+					foodDao.addFoodFile(foodFileVO);
+					
+					try{
+						uploadFile.transferTo(new File(fileUploadRealPath + "/" + saveFileName));
+					} catch(Exception e) {
+						e.printStackTrace();
+					} // catch
+				}
+			}		
+		}
+
 	}
 
 }

@@ -54,14 +54,14 @@
 				</div>
 
 				<div class="col-sm-9 col-md-10 main">
-					<p class="visible-xs">
+					<!-- <p class="visible-xs">
 						<button type="button" class="btn btn-primary btn-xs"
 							data-toggle="offcanvas">
 							<i class="glyphicon glyphicon-chevron-left"></i>
 						</button>
-					</p>
+					</p> -->
 
-					<h2 class="sub-header">나만 아는 레시피</h2>
+					<h2 class="sub-header">자유게시판</h2>
 
 					<br>
 
