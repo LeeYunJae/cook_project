@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.cooks.dao.FoodDao">
+	
+	<select id="getFoodDetail" parameterType="Integer" resultType="foodVO">
+		select * from FOOD 
+		where f_num=#{f_num}
+	</select>
+	
+	<select id="getFoodCount" parameterType="String" resultType="Integer">
+		select count(*) from FOOD where r_num=#{r_num}
+	</select>
+	
+	<select id="getArticles"  parameterType="String" resultType="foodFileMapVO">
+		select f.f_num, f.f_name, f.f_price, l.savefilename
+		from FOOD f left outer join FOOD_FILELIST l on f.f_num=l.f_num
+		where f.r_num=#{r_num}	
+		order by f_num
+	</select>
+	
+	<insert id="addFood" parameterType="HashMap">
+		insert into FOOD values(food_seq.NEXTVAL, #{f_name}, #{f_price}, #{f_recipe}, sysdate, #{f_ingredients}, #{f_origin}, null, 0, #{r_num})
+	</insert>
+	
+	<insert id="addFoodFileUpload" parameterType="foodFileVO">
+		insert into FOOD_FILELIST values(foodfile_seq.NEXTVAL, #{originFileName}, #{saveFileName}, #{fileSize}, food_seq.CURRVAL)
+	</insert>
+	
+</mapper>
