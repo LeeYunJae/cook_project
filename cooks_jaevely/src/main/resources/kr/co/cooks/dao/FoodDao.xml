@@ -3,40 +3,69 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.co.cooks.dao.FoodDao">
-	
+
+	<select id="getArticles" parameterType="String" resultType="foodMainFileMapVO">
+		select f.f_num, f.f_name, f.f_price, f.r_num, l.savefilename
+		from FOOD
+		f left outer join FOOD_MAINFILELIST l on f.f_num=l.f_num
+		where
+		f.r_num=#{r_num}
+		order by f_num
+	</select>
+
 	<select id="getFoodDetail" parameterType="Integer" resultType="foodMainFileMapVO">
 		select f.*, l.savefilename
-		from FOOD f left outer join FOOD_MAINFILELIST l on f.f_num=l.f_num
+		from FOOD f left outer join
+		FOOD_MAINFILELIST l on f.f_num=l.f_num
 		where f.f_num=#{f_num}
 	</select>
-	
+
 	<select id="getFoodFiles" parameterType="Integer" resultType="foodFileVO">
 		select saveFileName
 		from FOOD_FILELIST
 		where f_num=#{f_num}
 	</select>
 	
+	<select id="getResInfo" parameterType="String" resultType="restaurantVO">
+		select * from RESTAURANT
+		where r_num = #{r_num}	
+	</select>
+
 	<select id="getFoodCount" parameterType="String" resultType="Integer">
 		select count(*) from FOOD where r_num=#{r_num}
 	</select>
-	
-	<select id="getArticles"  parameterType="String" resultType="foodMainFileMapVO">
-		select f.f_num, f.f_name, f.f_price, f.r_num, l.savefilename
-		from FOOD f left outer join FOOD_MAINFILELIST l on f.f_num=l.f_num
-		where f.r_num=#{r_num}	
-		order by f_num
-	</select>
-	
+
 	<insert id="addFood" parameterType="HashMap">
-		insert into FOOD values(food_seq.NEXTVAL, #{f_name}, #{f_price}, #{f_ex_date}, #{f_recipe}, #{f_ingredients}, #{f_origin}, #{f_store}, 0, #{r_num})
+		insert into FOOD
+		values(food_seq.NEXTVAL, #{f_name}, #{f_price}, #{f_ex_date},
+		#{f_recipe}, #{f_ingredients}, #{f_origin}, null, 0, #{r_num})
 	</insert>
-	
+
 	<insert id="addFoodMainFile" parameterType="foodMainFileVO">
-		insert into FOOD_MAINFILELIST values(foodfile_seq.NEXTVAL, #{originFileName}, #{saveFileName}, #{fileSize}, food_seq.CURRVAL)
+		insert into
+		FOOD_MAINFILELIST values(foodfile_seq.NEXTVAL, #{originFileName},
+		#{saveFileName}, #{fileSize}, food_seq.CURRVAL)
 	</insert>
-	
+
 	<insert id="addFoodFile" parameterType="foodFileVO">
-		insert into FOOD_FILELIST values(foodfile_seq.NEXTVAL, #{originFileName}, #{saveFileName}, #{fileSize}, food_seq.CURRVAL)
+		insert into FOOD_FILELIST
+		values(foodfile_seq.NEXTVAL, #{originFileName}, #{saveFileName},
+		#{fileSize}, food_seq.CURRVAL)
 	</insert>
 	
+	<delete id="deleteFood" parameterType="Integer">
+		delete from FOOD
+		where f_num = #{f_num}
+	</delete>
+	
+	<delete id="deleteFoodMainFile" parameterType="Integer">
+		delete from FOOD_MAINFILELIST
+		where f_num = #{f_num}
+	</delete>
+	
+	<delete id="deleteFoodFiles" parameterType="Integer">
+		delete from FOOD_FILELIST
+		where f_num = #{f_num}
+	</delete>
+
 </mapper>

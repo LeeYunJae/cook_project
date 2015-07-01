@@ -11,7 +11,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>음식 추가하기</title>
+<title>주문하기</title>
 
 <!-- Bootstrap Core CSS -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -48,7 +48,7 @@
 		<div class="row">
 
 			<h3>
-				<p>&nbsp&nbsp&nbsp 음식 등록하기</p>
+				<p>&nbsp&nbsp&nbsp 주문하기</p>
 			</h3>
 
 			<br>
@@ -62,79 +62,111 @@
 				<input type="hidden" id="f_origin" name="f_origin" value="">
 				<input type="hidden" id="r_num" name="r_num" value="${r_num}">
 
+				<h4>01. 주문자 정보</h4>
+				<hr>
 					<div class="form-group">
-						<label for="foodName" class="col-sm-2 control-label">음식 이름</label>
+						<label class="col-sm-2 control-label">주문하시는분</label>
+						<div class="col-sm-4">
+							<h5>${userVO.id}</h5>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-2 control-label">주소</label>
+						<div class="col-sm-4">
+							<h5>${userVO.address}</h5>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">연락처</label>
+						<div class="col-sm-4">
+							<h5>${userVO.phone}</h5>
+						</div>
+					</div>
+				<hr>
+				
+				<h4>02. 배송 정보</h4>
+				<hr>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">받으실분</label>
 						<div class="col-sm-4">
 							<input type="text" class="form-control" id="f_name" name="f_name">
 						</div>
 					</div>
-					
+
 					<div class="form-group">
-						<label for="foodPic" class="col-sm-2 control-label">음식 대표사진</label>
+						<label class="col-sm-2 control-label">받으실곳</label>
 						<div class="col-sm-4">
-							<input type="file" id="food_mainFile" name="food_mainFile">
+							<input type="text" class="form-control" id="f_price" name="f_price">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">연락처</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="f_price" name="f_price">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">남기실 말씀</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="f_price" name="f_price">
+						</div>
+					</div>
+				<hr>
+				
+				<h4>03. 결제 정보</h4>
+				<hr>
+					<div class="form-group">
+						<label for="foodName" class="col-sm-2 control-label">음식 이름</label>
+						<div class="col-sm-4">
+							<h5>${f_name}</h5>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="price" class="col-sm-2 control-label">가격</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="f_price" name="f_price">
+							<h5>${f_price}</h5>
 						</div>
 					</div>
-
 					<div class="form-group">
-						<label for="recipe" class="col-sm-2 control-label">레시피</label>
-						<div class="col-sm-4" id="recipeClass">
-							<textarea class="form-control" rows="2" id="1" placeholder="1단계 레시피를 입력하세요"></textarea>
+						<label class="col-sm-2 control-label">수량</label>
+						<div class="col-sm-4">
+							<h5>${count}</h5>
 						</div>
-						
 					</div>
-					<label class="col-sm-2"></label>
-					<button type="button" onclick="addRecipe()">레시피 단계 추가</button>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">합계</label>
+						<div class="col-sm-4">
+							<h5 id="totalPrice">${f_price * count}</h5>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">적립금 적용</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="mileage" name="mileage" onforminput="totalPrice()" placeholder="보유하고계신 마일리지는${userVO.mileage}입니다">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">총 결제금액</label>
+						<div class="col-sm-4">
+							<input type="text" id="resultPrice">
+						</div>
+					</div>
+				<hr>
+				
+
 
 				<br>
 				<br>
-
-
-					<div class="form-group" id="addClass">
-					
-						<label for="ingredients1" class="col-sm-2 control-label"
-							style="width: 180px">원재료명</label>
-						<div class="col-sm-4">
-							<input type="text" class="form-control" id="ingredients1">
-						</div>
-						<label for="origin1" class="col-sm-1 control-label">원산지</label>
-						<div class="col-sm-4">
-							<input type="text" class="form-control" id="origin1">
-						</div>
-					
-
-					
-				</div>
-				<button type="button" onclick="addIngre()">추가</button>
-
 
 				
-					<div class="form-group">
-						<label for="ex_date" class="col-sm-2 control-label" >유통기한</label>
-						<div class="col-sm-4">
-							<input type="text" class="form-control" id="f_ex_date" name="f_ex_date" placeholder="예시)제조일로부터 3일">
-						</div>
-					</div>
+					
 
-					<div class="form-group">
-						<label for="foodPic" class="col-sm-2 control-label">음식사진</label>
-						<div class="col-sm-4">
-							<input type="file" id="food_files" name="food_files" multiple>
-						</div>
-					</div>
-
-					<br>
 
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<input type="button" onclick="totalDetail()" class="btn btn-danger" value="메뉴 등록하기">
+							<input type="button" onclick="totalDetail()" class="btn btn-danger" value="구매하기">
 						</div>
 					</div>
 					

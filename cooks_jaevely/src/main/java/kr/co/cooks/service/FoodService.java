@@ -12,6 +12,7 @@ import kr.co.cooks.vo.FoodMainFileListMapVO;
 import kr.co.cooks.vo.FoodFileListVO;
 import kr.co.cooks.vo.FoodMainFileListVO;
 import kr.co.cooks.vo.FoodVO;
+import kr.co.cooks.vo.RestaurantVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,24 +24,12 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 public class FoodService {
 	@Autowired FoodDao foodDao ;
 	@Autowired ServletContext servletContext;
-	
+
 	List<FoodMainFileListMapVO> foodFileList;
 	List<FoodFileListVO> foodFilesList;
 
-	public FoodMainFileListMapVO getFoodDetail(int f_num) {
-		return foodDao.getFoodDetail(f_num);
-	}
 	
-	public HashMap<String, Object> getFoodFiles(int f_num){
-		HashMap<String, Object> hashMap = new HashMap<>();
-		
-		foodFilesList = foodDao.getFoodFiles(f_num);
-		
-		hashMap.put("foodFilesList", foodFilesList);	//음식이 들어있는 list
-
-		return hashMap;
-	}
-
+	//한 레스토랑에 있는 총 음식 리스트
 	public HashMap<String, Object> list(String r_num) {
 		HashMap<String, Object> hashMap = new HashMap<>();
 
@@ -61,12 +50,34 @@ public class FoodService {
 		return hashMap;
 	}
 
+	//음식 상세정보 가져오기
+	public FoodMainFileListMapVO getFoodDetail(int f_num) {
+		return foodDao.getFoodDetail(f_num);
+	}
+
+
+	//추가 사진들 가져오기
+	public HashMap<String, Object> getFoodFiles(int f_num){
+		HashMap<String, Object> hashMap = new HashMap<>();
+
+		foodFilesList = foodDao.getFoodFiles(f_num);
+
+		hashMap.put("foodFilesList", foodFilesList);	//음식이 들어있는 list
+
+		return hashMap;
+	}
+	
+	//레스토랑 정보 가져오기
+	public RestaurantVO getResInfo(String r_num){
+		return foodDao.getResInfo(r_num);
+	}
+
+	//음식 등록하기 
 	@Transactional()
 	public void addFood(FoodVO foodVO, MultipartHttpServletRequest multipartReq) {
-		
-		//음식 등록
-		foodDao.addFood(foodVO);
 
+		//음식 정보 등록
+		foodDao.addFood(foodVO);
 
 		String fileUploadRealPath = servletContext.getRealPath("/fileUpload");
 
@@ -76,6 +87,7 @@ public class FoodService {
 			dir.mkdir();
 		}
 
+		//음식 메인사진 
 		if(multipartReq.getFiles("food_mainFile")!=null) {
 
 			List<MultipartFile> multiFile = multipartReq.getFiles("food_mainFile");
@@ -96,10 +108,10 @@ public class FoodService {
 					foodMainFileVO.setOriginFileName(originFileName);
 					foodMainFileVO.setSaveFileName(saveFileName);
 					foodMainFileVO.setFileSize(fileSize);
-					
+
 					//메인사진 등록
 					foodDao.addFoodMainFile(foodMainFileVO);
-					
+
 					try{
 						uploadFile.transferTo(new File(fileUploadRealPath + "/" + saveFileName));
 					} catch(Exception e) {
@@ -110,7 +122,8 @@ public class FoodService {
 			}
 
 		}
-		
+
+		//음식 추가사진들
 		if(multipartReq.getFiles("food_files")!=null) {
 
 
@@ -132,10 +145,10 @@ public class FoodService {
 					foodFileVO.setOriginFileName(originFileName);
 					foodFileVO.setSaveFileName(saveFileName);
 					foodFileVO.setFileSize(fileSize);
-					
+
 					//메뉴 사진들 등록
 					foodDao.addFoodFile(foodFileVO);
-					
+
 					try{
 						uploadFile.transferTo(new File(fileUploadRealPath + "/" + saveFileName));
 					} catch(Exception e) {
@@ -145,6 +158,13 @@ public class FoodService {
 			}		
 		}
 
+	}
+
+	//음식 삭제하기 
+	public void deleteFood(int f_num) {
+		foodDao.deleteFoodMainFile(f_num);	//메인 사진 삭제
+		foodDao.deleteFoodFiles(f_num);	//추가 사진들 삭제		
+		foodDao.deleteFood(f_num);	//음식 정보 삭제
 	}
 
 }

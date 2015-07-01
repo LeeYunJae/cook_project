@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Business Frontpage - Start Bootstrap Template</title>
+<title>맛있는 Cooks</title>
 
 <!-- Bootstrap Core CSS -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -26,6 +26,11 @@
 
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
+
+<!-- Custom JS -->
+<script src="common/js/common.js"></script>
+<script src="common/js/signUp.js"></script>
+
 </head>
 
 <body>
@@ -49,41 +54,41 @@
 
 		<div class="row">
 			<div class="col-sm-8">
-				<h2>바보네</h2>
-				<p>바보네는 1995년 양산에서 시작해</p>
-				<p>신선한 재료와</p>
+				<h2>${restaurant.r_name}</h2>
+				<p>${restaurant.r_info}</p>
+
 			</div>
 			<div class="col-sm-4">
 				<h2>Contact Us</h2>
 				<address>
-					<strong>상세주소</strong> <br>3481 Melrose Place <br>Beverly
-					Hills, CA 90210 <br>
+					<strong>상세주소</strong><br>${restaurant.r_address}<br>
 				</address>
 				<address>
-					<abbr title="Phone">P:</abbr>(043) 456-7890 <br> <abbr
-						title="Email">E:</abbr> <a href="mailto:#">name@example.com</a>
+					<abbr title="Phone">P : </abbr>${restaurant.r_phone}<br> 
 				</address>
 			</div>
-			<a href="addFoodForm.app?r_num=${r_num}">음식 추가하기</a>
-		</div>
-		<!-- /.row -->
+			
+			<c:if test="${loginUser.id==restaurant.id || loginUser.user_Level==2}"> 
+				<a class="btn btn-primary btn-md" href="addFoodForm.app?r_num=${r_num}">음식 추가하기</a>						
+			</c:if>		
+			
+		</div> <!-- /.row -->
 
 		<hr>
 		
 			<div class="row">
 				<c:forEach var="food" items="${foodFileList}">
 					<div class="col-sm-6" align="center">
-							<a href="getFoodDetail.app?f_num=${food.f_num}">
+							<a href="getFoodDetail.app?r_num=${food.r_num}&f_num=${food.f_num}">
 								<img class="img-circle img-responsive img-center" src="fileUpload/${food.saveFileName}" alt="" style="height: 300px; width: 300px;">
 							</a>
-							<a href="getFoodDetail.app?f_num=${food.f_num}">${food.f_name}</a>
+							<a href="getFoodDetail.app?r_num=${food.r_num}&f_num=${food.f_num}">${food.f_name}</a>
 							<br>
 						<c:out value="${food.f_price}"></c:out>
 					</div>
 					<br>
 				</c:forEach>
-			</div>
-		<!-- /.row -->
+			</div> <!-- /.row -->
 
 		<hr>
 
@@ -100,7 +105,7 @@
 	</div>
 	<!-- /.container -->
 
-	<div id="sign_Modal"></div>
+<jsp:include page="../common/sign_modal.jsp"/>
 </body>
 
 </html>

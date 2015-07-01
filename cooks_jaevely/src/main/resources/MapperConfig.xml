@@ -21,6 +21,8 @@
 		<typeAlias alias="foodMainFileVO" type="kr.co.cooks.vo.FoodMainFileListVO"/>
 		<typeAlias alias="foodMainFileMapVO" type="kr.co.cooks.vo.FoodMainFileListMapVO"/>
 		<typeAlias alias="foodFileVO" type="kr.co.cooks.vo.FoodFileListVO"/>
+		
+		<typeAlias alias="restaurantVO" type="kr.co.cooks.vo.RestaurantVO"/>
 
 		
 		

@@ -47,5 +47,13 @@ function getOrigin() {
 	}
 	html += '</p>';
 	$('#show_origin').html(html);	
+}
+
+function beforBuy() {
+	var f_num = $('#f_num').val();
+	var foodCount = document.getElementById("foodCount").value;
+	//alert(foodCount);
+	
+	location.href="buyFoodForm.app?f_num="+f_num+"&count="+foodCount;
 	
 }

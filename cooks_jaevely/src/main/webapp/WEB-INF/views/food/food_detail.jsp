@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>buy</title>
+<title>맛있는 Cooks</title>
 
 
 
@@ -44,13 +44,10 @@
    margin-left: 250px;
 }
 
-#makguksu {
-   top: 50%;
-   left: 50%;
-   width: 600px;
-   height: 400px;
-   margin-left: 250px;
+#foodFiles {
+	margin-left: 20%;
 }
+
 </style>
 
 </head>
@@ -65,15 +62,15 @@
 	<input type="hidden" id="f_recipe" value="${foodFileMapVO.f_recipe}">
 	<input type="hidden" id="f_origin" value="${foodFileMapVO.f_origin}">
 	<input type="hidden" id="f_ingredients" value="${foodFileMapVO.f_ingredients}">
-	
 
 	<!-- Page Content -->
 
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6">
-				<img class="img-responsive" src="fileUpload/${foodFileMapVO.saveFileName}" alt="">
+				<img class="img-responsive" id="mainFile" src="fileUpload/${foodFileMapVO.saveFileName}" alt="">
 			</div>
+	
 			<div class="menu-info">
 				<h1>${foodFileMapVO.f_name}</h1>
 				<table class="menuinfo-text">
@@ -88,21 +85,28 @@
 					</tr>
 					<tr>
 						<td>구매수량</td>
-						<td><select class="form-control qty-select-form">
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
-								<option>4</option>
-								<option>5</option>
-								<option>6</option>
-								<option>7</option>
-								<option>8</option>
-								<option>9</option>
+						<td><select class="form-control qty-select-form" id="foodCount" name="foodCount">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
 						</select></td>
 					</tr>
 				</table>
-				<a class="btn btn-primary btn-md" href="#">즉시구매</a> <a
-					class="btn btn-primary btn-md" href="#">장바구니</a>
+		
+				 <a class="btn btn-primary btn-md" onclick="beforBuy()">구매하기</a>
+				<%-- <a class="btn btn-primary btn-md" href="buyFoodForm.app?f_num=${foodFileMapVO.f_num}">구매하기</a> --%>	
+				<a class="btn btn-primary btn-md" href="#">장바구니</a>			
+				
+				<c:if test="${loginUser.id==resUser || loginUser.user_Level==2}"> 
+					<a class="btn btn-primary btn-md" href="deleteFood.app?r_num=${foodFileMapVO.r_num}&f_num=${foodFileMapVO.f_num}">음식 삭제하기</a>						
+				</c:if> 	
+					
 			</div>
 		</div>
 		<div class="row">
@@ -111,17 +115,17 @@
 					<p style="font-size: 20px; color: #d85c9a; margin-left: 520px;">Menu</p>
 				</div>
 
-				<!-- 사진부분 -->
-				
-				<img src="food/images/slogan1.png" alt="slogan" id="slogan" align="middle"><br><br>
+				<!-- 사진부분 -->				
+				<img src="food/images/slogan1.png" alt="slogan" id="slogan"><br><br>
 				
 				<c:forEach var="files" items="${foodFilesList}">
-				<img class="img-responsive" src="fileUpload/${files.saveFileName}" alt="">
-					<br>
+					<img src="fileUpload/${files.saveFileName}" id="foodFiles" alt="" align="middle">
+					<br><br><br>
 				</c:forEach>
 				
-				
+						
 			</div>
+			
 			<div class="row">
 				<div class="col-md-12">
 					<div class="themline">
@@ -159,10 +163,6 @@
 					<div class="product-list-text">
 						<p style="font-size: 20px;">유통기간</p>
 						<p>${foodFileMapVO.f_ex_date} </p>
-					</div>
-					<div class="product-list-text">
-						<p style="font-size: 20px;">보관방법</p>
-						<p>${foodFileMapVO.f_store} </p>
 					</div>
 					
 				</div>
@@ -213,8 +213,7 @@
 	</div>
 	<!-- /.container -->
 
-	<div id="sign_Modal"></div>
-
+<jsp:include page="../common/sign_modal.jsp"/>
 </body>
 
 </html>
