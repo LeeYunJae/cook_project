@@ -1,6 +1,9 @@
 package kr.co.cooks.service;
 
+import java.util.HashMap;
+
 import kr.co.cooks.dao.UserDao;
+import kr.co.cooks.vo.UserVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,28 +12,47 @@ import org.springframework.stereotype.Service;
 public class UserService {
 	
 	@Autowired UserDao userDao;
+	UserVO userVO;
 	
-	public int validation_Check(String email, String password) {
+	public String signUpEmailCheck(String signUp_email) {
 		
-		String pwd = "";
-		int status=0;
-				
-		pwd = userDao.validation_Check(email);
+		return userDao.signUpEmailCheck(signUp_email);
 		
-		if(pwd !="") {
-			if(password.equals(pwd)) {
-				status = 1;
-				
-			} else {
-				status = 2;
-				
-			}
-		} else {
-			status = 3;
-			
-		}
 		
-		return status;
 	}
+	
+	public UserVO validation_Check(String email, String password) {
+		
+		HashMap<String, String> params = new HashMap<>();
+		
+		params.put("email", email);
+		params.put("password", password);
+		
+		return userDao.existUser(params);
+		
+	}
+	
+	public void signUpUser(UserVO userVO) {
+		
+		userDao.signUpUser(userVO);
+	}
+	
 
+	public String userUpdate(UserVO userVO, String pwd) {
+		
+		HashMap<String, String> params = new HashMap<>();
+		params.put("email", userVO.getId());
+		params.put("password", pwd);
+		
+		if( userDao.existUser(params) != null ) {
+			
+			userDao.userUpdate(userVO);
+			return "success";
+			
+		} else 
+			return "fail";
+			
+	}
+	
+	
 }

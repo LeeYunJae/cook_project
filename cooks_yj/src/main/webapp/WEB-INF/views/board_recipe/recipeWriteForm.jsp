@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,15 +18,20 @@
 
 <!-- Custom CSS -->
 <link href="community/css/shop-homepage.css" rel="stylesheet">
+<link href='common/css/modalStyle.css' rel='stylesheet'>
 
 <!-- jQuery -->
 <script src="js/jquery.js"></script>
 <script src="common/js/common.js"></script>
 <script src="common/js/signUp.js"></script>
-<script src="board_recipe/js/recipeWriteForm.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
+
+<!-- Custom JS -->
+<script src="board_recipe/js/recipeWriteForm.js"></script>
+<script src="common/js/common.js"></script>
+<script src="common/js/signUp.js"></script>
 
 
 </head>
@@ -42,8 +48,10 @@
 					role="navigation">
 
 					<ul class="nav nav-sidebar" style="margin-top: 15px;">
-						<li><a href="#">자유게시판</a></li>
-						<li class="active"><a href="#">나만 아는 레시피</a></li>
+						<li><a href="/cooks/NoticeList.app">공지사항</a></li>
+						<li><a href="/cooks/freeList.app">자유게시판</a></li>
+						<li class="active"><a href="/cooks/recipeList.app">나만 아는 레시피</a></li>
+						<li><a href="/cooks/reviewListView.app">음식후기</a></li>
 					</ul>
 
 				</div>
@@ -57,15 +65,16 @@
 					</p>
 
 					<h2 class="sub-header">나만 아는 레시피</h2>
-
+					
 					<br>
 
 					<div class="well bs-component">
-
+					
 						<form class="form-horizontal" action="recipeWrite.app" method="post">
 						<input type="hidden" name="pageNum" id="pageNum" value="${pageNum}">
+						<input type="hidden" id="userId" value="${loginUser.id}">
 							<div class="form-group">
-								<label for="id">글쓴이 : </label> ${id}
+								<label for="id">글쓴이 : </label> ${loginUser.name}
 								<hr>
 							</div>
 
@@ -95,6 +104,7 @@
 		<!--/row-->
 	</div>
 	<!--/.container-->
+	
 
 	<!-- Footer -->
 	<div class="container">

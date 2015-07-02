@@ -17,15 +17,20 @@
 
 <!-- Custom CSS -->
 <link href="community/css/shop-homepage.css" rel="stylesheet">
+<link href='common/css/modalStyle.css' rel='stylesheet'>
 
 <!-- jQuery -->
 <script src="js/jquery.js"></script>
 <script src="common/js/common.js"></script>
 <script src="common/js/signUp.js"></script>
-<script src="board_recipe/js/recipeUpdateForm.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
+
+<!-- Custom JS -->
+<script src="board_recipe/js/recipeUpdateForm.js"></script>
+<script src="common/js/common.js"></script>
+<script src="common/js/signUp.js"></script>
 
 </head>
 
@@ -41,8 +46,10 @@
 					role="navigation">
 
 					<ul class="nav nav-sidebar" style="margin-top: 15px;">
-						<li><a href="#">자유게시판</a></li>
-						<li class="active"><a href="#">나만 아는 레시피</a></li>
+						<li><a href="/cooks/NoticeList.app">공지사항</a></li>
+						<li><a href="/cooks/freeList.app">자유게시판</a></li>
+						<li class="active"><a href="/cooks/recipeList.app">나만 아는 레시피</a></li>
+						<li><a href="/cooks/reviewListView.app">음식후기</a></li>
 					</ul>
 
 				</div>
@@ -62,22 +69,22 @@
 					<div class="well bs-component">
 
 						<form class="form-horizontal" action="recipeUpdate.app" method="post">
-						<input type="hidden" name="recipe_num" id="recipe_num" value="${recipeVO.recipe_num}">
+						<input type="hidden" name="recipe_num" id="recipe_num" value="${recipeUserVO.recipe_num}">
 						<input type="hidden" name="pageNum" id="pageNum" value="${pageNum}">
 							<div class="form-group">
-								<label for="id">글쓴이 : </label> ${id}
+								<label for="id">글쓴이 : </label> ${recipeUserVO.name}
 								<hr>
 								<!--  <input type="text" class="form-control" id="recipt_title" placeholder="제목을 입력하세요"> -->
 							</div>
 
 							<div class="form-group">
 								<label for="recipe_title">제 목</label> 
-								<input type="text" name="recipe_title" class="form-control" value="${recipeVO.recipe_title}">
+								<input type="text" name="recipe_title" class="form-control" value="${recipeUserVO.recipe_title}">
 							</div>
 
 							<div class="form-group">
 								<label for="recipe_content">내 용</label>
-								<textarea name="recipe_content" class="form-control" rows="10" cols="7">${recipeVO.recipe_content}</textarea>
+								<textarea name="recipe_content" class="form-control" rows="10" cols="7">${recipeUserVO.recipe_content}</textarea>
 							</div>
 							<br>
 
@@ -92,10 +99,9 @@
 				</div>
 			</div>
 
-		</div>
-		<!--/row-->
-	</div>
-	<!--/.container-->
+		</div> <!--/row-->
+	</div> <!--/.container-->
+	
 
 	<!-- Footer -->
 	<div class="container">

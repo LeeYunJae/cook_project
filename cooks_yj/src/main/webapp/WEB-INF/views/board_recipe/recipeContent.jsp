@@ -18,15 +18,18 @@
 
 <!-- Custom CSS -->
 <link href="community/css/shop-homepage.css" rel="stylesheet">
+<link href='common/css/modalStyle.css' rel='stylesheet'>
 
 <!-- jQuery -->
-<script src="js/jquery.js"></script>
-<script src="common/js/common.js"></script>
-<script src="common/js/signUp.js"></script>
-<script src="board_recipe/js/recipeContent.js"></script>
+<script src="js/jquery-1.11.1.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
+
+<!-- Custom JS -->
+<script src="board_recipe/js/recipeContent.js"></script>
+<script src="common/js/common.js"></script>
+<script src="common/js/signUp.js"></script>
 
 <style>
 #inlineFooter, #recipe_like_form {
@@ -47,15 +50,18 @@
 					role="navigation">
 
 					<ul class="nav nav-sidebar" style="margin-top: 15px;">
-						<li><a href="#">자유게시판</a></li>
-						<li class="active"><a href="#">나만 아는 레시피</a></li>
+						<li><a href="/cooks/NoticeList.app">공지사항</a></li>
+						<li><a href="/cooks/freeList.app">자유게시판</a></li>
+						<li class="active"><a href="/cooks/recipeList.app">나만 아는 레시피</a></li>
+						<li><a href="/cooks/reviewListView.app">음식후기</a></li>
 					</ul>
 
 				</div>
 				
-				<input type="hidden" name="pageNum" value="${pageNum}">
-				<input type="hidden" id="recipe_num" value="${recipeVO.recipe_num}">
-
+				<input type="hidden" id="pageNum " name="pageNum" value="${pageNum}">
+				<input type="hidden" id="recipe_num" value="${recipeUserVO.recipe_num}">
+				<input type="hidden" id="userId" value="${loginUser.id}">
+				
 				<div class="col-sm-9 col-md-10 main">
 					<p class="visible-xs">
 						<button type="button" class="btn btn-primary btn-xs"
@@ -70,24 +76,37 @@
 
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h4>${recipeVO.recipe_title}</h4>
-							<label for="id">글쓴이 : </label> ${id} <br>
+							<h4>${recipeUserVO.recipe_title}</h4>
+							<label for="id">글쓴이 : </label> ${recipeUserVO.name} <br>
 						</div>
-						<div class="panel-body">${recipeVO.recipe_content}</div>
+						<div class="panel-body">${recipeUserVO.recipe_content}</div>
 						<div class="panel-footer">
 							<div id="inlineFooter">
+							<c:if test="${loginUser.id==null}">
+								<a>좋아요</a> . 
+								<a>댓글달기</a> . 
+							
+							</c:if>
+							
+							<c:if test="${loginUser.id!=null}">
+							
 								<a onclick="clickLike()" id="like">좋아요</a>
 								<a onclick="clickDislike()" id="dislike" hidden="hidden">좋아요 취소</a> . 
-								<a onclick="getFocus()">댓글달기</a> . 
+								<a onclick="getFocus()">댓글달기</a> .
+							</c:if> 
 								<a><span class="glyphicon glyphicon-thumbs-up"></span><div id="recipe_like_form"></div></a>
 
 							</div>
 
 							<!-- 게시글 수정/게시글 삭제 버튼을 좋아요/댓글달기 와 같은줄에 오게하기위해 id값 주고 style에서 inline-block 해줌 -->
 							<div id="inlineFooter" style="float: right">
-								<a href="recipeUpdateForm.app?recipe_num=${recipeVO.recipe_num}&pageNum=${pageNum}">게시글 수정</a> . 
-								<a href="recipeDelete.app?recipe_num=${recipeVO.recipe_num}&pageNum=${pageNum}">게시글 삭제</a> . 
-								<a href="recipeList.app?pageNum=${pageNum}">목록으로</a>
+								<c:if test="${loginUser.id==recipeUserVO.id}">
+								<a href="recipeUpdateForm.app?recipe_num=${recipeUserVO.recipe_num}&pageNum=${pageNum}">게시글 수정</a> .
+								<a href="recipeDelete.app?recipe_num=${recipeUserVO.recipe_num}">게시글 삭제</a> .
+								
+								 
+							</c:if>
+							<a href="recipeList.app?pageNum=${pageNum}">목록으로</a>
 							</div>
 						</div>
 					</div>
@@ -95,30 +114,21 @@
 					
 					<div class="well row" id="commentForm">
 							<input type="hidden" id="commentPageNum" value="1">
-						
-						 
-						<!-- 댓글이 0개인 경우 -->
-						<!--
-						<c:if test="${recipeCommentCount == 0 }">
-							<h4>등록된 댓글이 없습니다</h4>
-						</c:if>
-						 -->
+			
 
 						<!-- 기존에 있는 코멘트 읽어오기 -->			
-						 <div id="show_comment"></div>
-						
+						 <div id="show_comment"></div>						
 			
 
 						<form class="form-horizontal" role="form">
 							<div class="form-group" style="padding: 14px;">
-						<!-- 댓글 입력 창 -->
-								<textarea class="form-control" id="rcomment_content" name="rcomment_content"
-									placeholder="댓글을 입력하세요!"></textarea>
+						
+							<textarea class="form-control" id="rcomment_content" name="rcomment_content" placeholder="댓글을 입력하세요!"></textarea>
 							</div>
-							<c:if test="${id==null}">
-								<button class="btn btn-primary pull-right" type="button" id="comment_write" disabled="disabled">추가</button>
+							<c:if test="${loginUser.id==null}">
+								<button class="btn btn-primary pull-right" type="button" disabled="disabled">추가</button>
 							</c:if>
-							<c:if test="${id!=null}">
+							<c:if test="${loginUser.id!=null}">
 								<button class="btn btn-primary pull-right" type="button" id="comment_write">추가</button>
 							</c:if>
 							<ul class="list-inline">

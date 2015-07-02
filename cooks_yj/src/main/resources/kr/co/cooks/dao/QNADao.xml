@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.cooks.dao.QNADao">
+	
+	<select id="getQNACount" resultType="Integer">
+		select count(*) from QNA
+	</select>
+	
+	<select id="getQNA" parameterType="HashMap" resultType="qnaVO">
+		select * 
+		from (select rownum rm, human.* from
+			(select q_Num, id, q_Title, q_Date, q_Dept from QNA order by q_Position desc, q_Dept) human)
+			where rm between #{startRow} and #{endRow}
+	</select>
+	
+	<insert id="qnaWrite" parameterType="qnaVO">
+		insert into QNA values(qna_seq.nextval,#{id},#{q_Title},#{q_Content},sysdate,0,qna_seq.currval,0,15)
+	</insert>
+	
+	<select id="qnaContent" parameterType="Integer" resultType="qnaVO">
+		select * from QNA where q_Num=#{q_Num}
+	</select>
+	
+	<select id="getQNAUpdate" parameterType="Integer" resultType="qnaVO">
+		select id, q_Num, q_Title, q_Content from QNA where q_Num=#{q_Num}	
+	</select>
+	
+	<update id="qnaUpdate" parameterType="qnaVO">
+		update QNA
+		set q_Title=#{q_Title}, q_Content=#{q_Content}
+		where q_Num=#{q_Num}
+	</update>
+	
+	<delete id="qnaDelete" parameterType="Integer">
+		delete from QNA where q_Num=#{q_Num}
+	</delete>
+	
+	<delete id="qnaDelete1" parameterType="Integer">
+		delete 
+		from QNA 
+		where q_Position=(select q_Position from QNA where q_Num=#{q_Num})
+		and q_Dept=1
+	</delete>
+	
+	<insert id="qnaReply" parameterType ="qnaVO" >
+		insert into QNA values(qna_seq.nextval,#{id},#{q_Title},#{q_Content},sysdate,#{q_Dept},#{q_Position},0,15)
+	</insert>
+</mapper>	

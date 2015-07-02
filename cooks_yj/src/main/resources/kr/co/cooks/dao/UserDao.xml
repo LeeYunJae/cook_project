@@ -4,9 +4,29 @@
 
 <mapper namespace="kr.co.cooks.dao.UserDao">
 
-	<select id="validation_Check" parameterType="String" resultType="String">
-		select password from USERS where id = #{id}
+	<select id="signUpEmailCheck" parameterType="String" resultType="String">
+		select ID
+		from USERS
+		where ID = #{signUp_email}
 	</select>
+
+	<select id="existUser" parameterType="Map" resultType="UserVO">
+		select ID, PASSWORD, NAME, ADDRESS, PHONE, USER_LEVEL, MILEAGE
+		from USERS
+		where ID = #{email} AND PASSWORD=#{password}
+	</select>
+	
+	<insert id="signUpUser" parameterType="UserVO">
+		insert into USERS values(#{id}, #{password}, #{name}, #{address}, #{phone}, #{user_Level}, #{mileage} )
+	</insert>
+	
+	<update id="userUpdate" parameterType="UserVO">
+		update USERS
+		set NAME=#{name}, ADDRESS=#{address}, PHONE=#{phone}
+		where ID=#{id}
+	</update>
+	
 	
 
 </mapper>
+

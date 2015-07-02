@@ -14,6 +14,13 @@
 		p:driverClassName="oracle.jdbc.driver.OracleDriver" p:username="team3"
 		p:password="eowjseo" p:url="jdbc:oracle:thin:@team3.callon.kr:1521:orcl"
 		destroy-method="close" />
+		
+		
+		<!-- 서버에 올릴 경우에는 클래스를 아래 dbcp에서 사용. 
+		
+		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" 
+		
+		--> 
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />

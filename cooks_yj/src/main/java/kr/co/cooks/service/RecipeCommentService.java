@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import kr.co.cooks.dao.RecipeCommentDao;
+import kr.co.cooks.vo.RecipeCommentUserVO;
 import kr.co.cooks.vo.RecipeCommentVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +14,12 @@ import org.springframework.stereotype.Service;
 public class RecipeCommentService {
 	@Autowired RecipeCommentDao commentDao ;
 	
-	public List<RecipeCommentVO> commentWrite(RecipeCommentVO commentVO) {		
+	public void commentWrite(RecipeCommentVO commentVO) {		
 		
 		commentDao.commentWrite(commentVO);			
-		
-		return commentRead(commentVO.getRecipe_num(), 10);
 	}
 	
-	public List<RecipeCommentVO> commentRead(int recipe_num, int endRow) {
+	public List<RecipeCommentUserVO> commentRead(int recipe_num, int endRow) {
 		HashMap<String, Integer> hashMap = new HashMap<>();
 		
 		hashMap.put("recipe_num", recipe_num);
@@ -29,15 +28,11 @@ public class RecipeCommentService {
 		return commentDao.commentRead(hashMap);
 	}
 	
-	public List<RecipeCommentVO> commentDelete(int recipe_num, int rcomment_num){
+	public void commentDelete(int recipe_num, int rcomment_num){
 		commentDao.commentDelete(rcomment_num);
-		
-		return commentRead(recipe_num, 10);
 	}
 	
-//	public List<RecipeCommentVO> commentUpdate(int recipe_num, int rcomment_num){
-//		commentDao.commentUpdate(rcomment_num);
-//		
-//		return commentRead(recipe_num, 10);
+//	public void recipeAllCommentDelete(int recipe_num) {
+//		commentDao.recipeAllCommentDelete(recipe_num);
 //	}
 }

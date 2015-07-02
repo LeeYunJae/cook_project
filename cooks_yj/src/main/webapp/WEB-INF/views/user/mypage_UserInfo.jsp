@@ -20,13 +20,19 @@
     <link href="community/css/shop-homepage.css" rel="stylesheet">
     <link href='common/css/modalStyle.css' rel='stylesheet'>
     
+    <style>
+    .form-control{
+    width: 70%;
+    }
+    </style>
+    
     <!-- jQuery -->
     <script src="js/jquery-1.11.1.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 	<!-- Custom JS -->
     <script src="common/js/common.js"></script>
-    <script src="user/js/user.js"></script>
+    <script src="user/user.js"></script>
 
 </head>
 <body>
@@ -40,15 +46,14 @@
         
         <div class="row row-offcanvas row-offcanvas-left">
 
-				<div class="col-sm-3 col-md-2 sidebar-offcanvas" id="sidebar"
-					role="navigation">
+				<div class="col-sm-3 col-md-2 sidebar-offcanvas" id="sidebar" role="navigation">
 
 					<ul class="nav nav-sidebar" style="margin-top: 15px;">
-						<li class="active"><a href="#">주문내역/취소</a></li>
+						<li><a href="/cooks/userOrderList.app">주문내역/취소</a></li>
 						<li><a href="#">구매내역</a></li>
-						<li><a href="#">마일리지</a></li>
 						<li><a href="#">나의 Q & A</a></li>
-						<li><a href="#">회원정보수정</a></li>
+						<li class="active"><a href="/cooks/userInfo.app">회원정보수정</a></li>
+						<li><a href="#findPwd" data-toggle="modal">비밀번호변경</a></li>
 					</ul>
 
 				</div>
@@ -56,49 +61,42 @@
 
 				<div class="col-sm-9 col-md-10 main">
 
-					<!--toggle sidebar button-->
-					<p class="visible-xs">
-						<button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">
-							<i class="glyphicon glyphicon-chevron-left"></i>
-						</button>
-					</p>
-
 					<h2 class="sub-header">회원정보수정</h2>
 					<div class="table-responsive">
 
-						<div>
+						<div id="wrapForm" >
 							<form role="form">
-								<div class="form-group">
+								<div class="form-group" >
 
 									<label for="usr">아이디</label>
-									<input readonly type="text" class="form-control" placeholder="E-mail" id="userId" value="${loginUser.id }">
+									<input type="text" class="form-control" placeholder="E-mail" id="userId" value="${loginUser.id }" disabled>
 									<br>
-									
-									<label for="password">비밀번호 변경</label>
-									<input type="password" class="form-control" placeholder="PASSWORD" id="changePwd">
-									<div id="check_newPwd">&nbsp;</div>
-									
-									<label for="password">비밀번호 확인</label>
-									<input type="password" class="form-control" placeholder="PASSWORD" id="checkPwd">
-									<div id="re_check_newPwd">&nbsp;</div>
 									
 									<label for="name">이름</label>
 									<input type="text" class="form-control" placeholder="USER NAME" id="userName" value="${loginUser.name }">
-									<div id="check_userName">&nbsp;</div>
+									<br>
 									
 									<label for="address">주소</label>
 									<input type="text" class="form-control" placeholder="ADDRESS" id="userAddress" value="${loginUser.address }">
 									<br>
+									
 									<label for="phone">연락처</label>
-									<input type="text" class="form-control" placeholder="PHONE NUMBER" id="userPhone" value="${loginUser.phone }">
+									<input type="text" class="form-control" placeholder="010-0000-0000" id="userPhone" value="${loginUser.phone }">
+									<br>
+									
+									<label for="phone">비밀번호 확인</label>
+									<input type="password" class="form-control" placeholder="PASSWORD" id="userPwd">
+									<br>
 								</div>
 								
 							</form>
+							
+							<div>
+								<button type="button" id="userUpdateBtn" class="btn btn-lg btn-block btn-success" style="width:70%;">수정하기</button>
+							</div>
 						</div>
 
-						<div>
-							<button type="button" id="userUpdateBtn" class="btn btn-lg btn-block btn-success">수정하기</button>
-						</div>
+						
 
 					</div> <!-- /table-responsive -->
 
@@ -124,6 +122,7 @@
     </div>
     <!-- /.container -->
     
-	
+    <jsp:include page="../common/sign_modal.jsp"/>
+
 </body>
 </html>

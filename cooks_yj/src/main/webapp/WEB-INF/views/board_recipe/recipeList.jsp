@@ -19,15 +19,18 @@
 
 <!-- Custom CSS -->
 <link href="community/css/shop-homepage.css" rel="stylesheet">
+<link href='common/css/modalStyle.css' rel='stylesheet'>
 
 <!-- jQuery -->
 <script src="js/jquery.js"></script>
-<script src="common/js/common.js"></script>
-<script src="common/js/signUp.js"></script>
-<script src="community/js/community.js"></script>	<!-- 글쓰기 모달 -->
 
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
+
+<!-- Custom JS -->
+<script src="common/js/common.js"></script>
+<script src="common/js/signUp.js"></script>
+<!-- <script src="community/js/community.js"></script> -->	<!-- 글쓰기 모달 -->
 
 </head>
 
@@ -46,8 +49,10 @@
 					role="navigation">
 
 					<ul class="nav nav-sidebar" style="margin-top: 15px;">
-						<li><a href="#">자유게시판</a></li>
-						<li class="active"><a href="#">나만 아는 레시피</a></li>
+						<li><a href="/cooks/NoticeList.app">공지사항</a></li>
+						<li><a href="/cooks/freeList.app">자유게시판</a></li>
+						<li class="active"><a href="/cooks/recipeList.app">나만 아는 레시피</a></li>
+						<li><a href="/cooks/reviewListView.app">음식후기</a></li>
 					</ul>
 
 				</div>
@@ -102,7 +107,7 @@
 										<a href="recipeContent.app?recipe_num=${recipe.recipe_num}&pageNum=${pageNum}">${recipe.recipe_title}</a>
 									</td>
 									<td>
-										<c:out value="${recipe.id}"></c:out>
+										<c:out value="${recipe.name}"></c:out>
 									</td>
 									<td>
 										<c:out value="${recipe.recipe_date}"></c:out>
@@ -120,9 +125,12 @@
 						
 						<!-- Button trigger modal -->
 						<!--  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#writeForm" data-backdrop="static">글쓰기</button> -->
-						<form action="recipeWriteForm.app" method="post">
+					 	<form action="recipeWriteForm.app" method="post">
 							<input type="hidden" name="pageNum" id="pageNum" value="${pageNum}">
-							<input type="submit" value="글쓰기"/> 
+							<input type="hidden" id="userId" value="${loginUser.id}">
+							<c:if test="${loginUser.id!=null}">
+								<input type="submit" value="글쓰기"/>
+							</c:if> 
 						</form>
 					</div>
 
