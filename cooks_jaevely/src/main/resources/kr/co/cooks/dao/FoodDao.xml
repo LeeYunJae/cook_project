@@ -35,10 +35,10 @@
 		select count(*) from FOOD where r_num=#{r_num}
 	</select>
 
-	<insert id="addFood" parameterType="HashMap">
+	<insert id="addFood" parameterType="foodVO">
 		insert into FOOD
 		values(food_seq.NEXTVAL, #{f_name}, #{f_price}, #{f_ex_date},
-		#{f_recipe}, #{f_ingredients}, #{f_origin}, null, 0, #{r_num})
+		#{f_recipe}, #{f_ingredients}, #{f_origin}, null, 0, #{r_num}, sysdate)
 	</insert>
 
 	<insert id="addFoodMainFile" parameterType="foodMainFileVO">
@@ -67,5 +67,28 @@
 		delete from FOOD_FILELIST
 		where f_num = #{f_num}
 	</delete>
+	
+	<insert id="addOrderNum" parameterType="String">
+		insert into ORDERS_NUM values(order_seq.NEXTVAL, #{userId})
+	</insert>
+	
+	<insert id="addOrders" parameterType="HashMap">
+		insert into	ORDERS values(#{f_num}, order_seq.CURRVAL, #{r_num}, sysdate, #{o_count}, #{o_price})
+	</insert>
+	
+	<update id="minusMileage" parameterType="HashMap">
+		update USERS set mileage = mileage-#{mileage}
+		where id = #{userId}
+	</update>
+	
+	<update id="addMileage" parameterType="HashMap">
+		update USERS set mileage = mileage+#{resultPrice}
+		where id = #{userId}
+	</update>
+	
+	<update id="addFoodCount" parameterType="Integer">
+		update FOOD set f_count = f_count+1
+		where f_num = #{f_num}
+	</update>
 
 </mapper>

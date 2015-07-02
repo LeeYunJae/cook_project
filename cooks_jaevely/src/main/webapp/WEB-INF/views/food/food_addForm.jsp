@@ -119,7 +119,7 @@
 					<div class="form-group">
 						<label for="ex_date" class="col-sm-2 control-label" >유통기한</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="f_ex_date" name="f_ex_date" placeholder="예시)제조일로부터 3일">
+							<input type="text" class="form-control" id="f_ex_date" name="f_ex_date" placeholder="예)제조일로부터 3일">
 						</div>
 					</div>
 

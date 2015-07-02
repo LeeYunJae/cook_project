@@ -40,7 +40,7 @@ public class FoodControl {
 	public ModelAndView foodList(@RequestParam String r_num, HttpSession session) {	
 
 		ModelAndView mav = new ModelAndView();
-		restaurantVO = foodService.getResInfo(r_num) ;	//가게에 대한 정보
+		restaurantVO = foodService.getResInfo(r_num) ;				//가게에 대한 정보
 		HashMap<String, Object> hashMap= foodService.list(r_num);	//음식 리스트
 		
 
@@ -61,12 +61,12 @@ public class FoodControl {
 
 		foodFileMapVO = foodService.getFoodDetail(f_num) ;					//음식 정보 가져오기
 		HashMap<String, Object> hashMap=foodService.getFoodFiles(f_num);	//추가 사진들 가져오기						
-		restaurantVO = foodService.getResInfo(r_num) ;	//가게에 대한 정보
+		restaurantVO = foodService.getResInfo(r_num) ;						//가게에 대한 정보
 		
 		
 		mav.addObject("foodFileMapVO", foodFileMapVO);
 		mav.addObject("foodFilesList", hashMap.get("foodFilesList"));
-		mav.addObject("resUser", restaurantVO.getId()); //레스토랑 주인 아이디 가져오기
+		mav.addObject("resUser", restaurantVO.getId()); 					//레스토랑 주인 아이디 가져오기
 		mav.setViewName("food/food_detail");
 
 		return mav;
@@ -101,30 +101,47 @@ public class FoodControl {
 		return "redirect:/foodList.app?r_num=" + r_num ;
 	}
 	
-	//음식 구매하기
+	//음식 구매하기폼
 	@RequestMapping(value="/buyFoodForm.app")
 	public ModelAndView buyFoodForm(@RequestParam int f_num, int count, HttpSession session) {	
 		ModelAndView mav = new ModelAndView();
 		
 		UserVO userVO = (UserVO)session.getAttribute("loginUser");
 		
-		foodFileMapVO = foodService.getFoodDetail(f_num);
-		
-		
-		
-		
-		//System.out.println("f_num===>" + f_num);
+		foodFileMapVO = foodService.getFoodDetail(f_num);		//음식 정보 가져오기
 
-		mav.addObject("userVO", userVO);	//음식 구매하는 고객 정보
-		mav.addObject("f_num", f_num);		//음식번호
+		mav.addObject("userVO", userVO);						//음식 구매하는 고객 정보
+		mav.addObject("f_num", f_num);							//음식번호
 		mav.addObject("f_name", foodFileMapVO.getF_name());		//음식이름
-		mav.addObject("f_price", foodFileMapVO.getF_price());	//음식이름
-		mav.addObject("count", count);	//음식이름
+		mav.addObject("f_price", foodFileMapVO.getF_price());	//음식가격
+		mav.addObject("count", count);							//수량
 		
 
-		
-		//mav.addObject("r_num", r_num);
 		mav.setViewName("food/food_buyForm");
+
+		return mav;
+	}
+	
+	//음식 구매하기
+	@RequestMapping(value="/buyFood.app")
+	public ModelAndView buyFood(@RequestParam int f_num, int count, int useMileage, int o_price, HttpSession session) {	
+		ModelAndView mav = new ModelAndView();
+		
+		System.out.println("마일리지 ===> " + useMileage);
+		
+		UserVO userVO = (UserVO)session.getAttribute("loginUser");	//구매자정보
+		
+		foodService.buyFood(userVO.getId(), f_num, count, useMileage, o_price);
+		
+
+//		mav.addObject("userVO", userVO);						//음식 구매하는 고객 정보
+//		mav.addObject("f_num", f_num);							//음식번호
+//		mav.addObject("f_name", foodFileMapVO.getF_name());		//음식이름
+//		mav.addObject("f_price", foodFileMapVO.getF_price());	//음식가격
+//		mav.addObject("count", count);							//수량
+//		
+
+		mav.setViewName("food/food_buyEnd");
 
 		return mav;
 	}

@@ -1,5 +1,7 @@
 package kr.co.cooks.vo;
 
+import java.sql.Timestamp;
+
 
 public class FoodVO {
 	private int f_num;				//음식 번호
@@ -12,6 +14,7 @@ public class FoodVO {
 	private String f_store;			//보관방법
 	private int f_count;			//매출량
 	private String r_num;			//사업자 등록번호
+	private Timestamp f_regi_date;	//음식 등록날짜
 	
 	
 	public int getF_num() {
@@ -32,17 +35,17 @@ public class FoodVO {
 	public void setF_price(int f_price) {
 		this.f_price = f_price;
 	}
-	public String getF_recipe() {
-		return f_recipe;
-	}
-	public void setF_recipe(String f_recipe) {
-		this.f_recipe = f_recipe;
-	}
 	public String getF_ex_date() {
 		return f_ex_date;
 	}
 	public void setF_ex_date(String f_ex_date) {
 		this.f_ex_date = f_ex_date;
+	}
+	public String getF_recipe() {
+		return f_recipe;
+	}
+	public void setF_recipe(String f_recipe) {
+		this.f_recipe = f_recipe;
 	}
 	public String getF_ingredients() {
 		return f_ingredients;
@@ -74,14 +77,21 @@ public class FoodVO {
 	public void setR_num(String r_num) {
 		this.r_num = r_num;
 	}
+	public Timestamp getF_regi_date() {
+		return f_regi_date;
+	}
+	public void setF_regi_date(Timestamp f_regi_date) {
+		this.f_regi_date = f_regi_date;
+	}
 	
 	
 	@Override
 	public String toString() {
 		return "FoodVO [f_num=" + f_num + ", f_name=" + f_name + ", f_price="
-				+ f_price + ", f_recipe=" + f_recipe + ", f_ex_date="
-				+ f_ex_date + ", f_ingredients=" + f_ingredients
-				+ ", f_origin=" + f_origin + ", f_store=" + f_store
-				+ ", f_count=" + f_count + ", r_num=" + r_num + "]";
+				+ f_price + ", f_ex_date=" + f_ex_date + ", f_recipe="
+				+ f_recipe + ", f_ingredients=" + f_ingredients + ", f_origin="
+				+ f_origin + ", f_store=" + f_store + ", f_count=" + f_count
+				+ ", r_num=" + r_num + ", f_regi_date=" + f_regi_date + "]";
 	}
+	
 }

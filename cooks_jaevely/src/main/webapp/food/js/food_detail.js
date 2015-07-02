@@ -3,7 +3,7 @@ $(document).ready( function() {
 	getIngre();
 	getOrigin();
 	
-})
+});
 
 function getRecipe() {
 	var f_recipe = $('#f_recipe').val();		//레시피내용

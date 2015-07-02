@@ -99,9 +99,14 @@
 					</tr>
 				</table>
 		
-				 <a class="btn btn-primary btn-md" onclick="beforBuy()">구매하기</a>
-				<%-- <a class="btn btn-primary btn-md" href="buyFoodForm.app?f_num=${foodFileMapVO.f_num}">구매하기</a> --%>	
-				<a class="btn btn-primary btn-md" href="#">장바구니</a>			
+				<c:if test="${loginUser.id==null}"> 
+					<a class="btn btn-primary btn-md" onclick="alert('로그인을 하셔야 구매하실 수 있습니다')">구매하기</a>	
+					<a class="btn btn-primary btn-md" onclick="alert('로그인을 하셔야 장바구니에 보관하실 수 있습니다')">장바구니</a>							
+				</c:if> 
+				<c:if test="${loginUser.id!=null}"> 					
+					<a class="btn btn-primary btn-md" onclick="beforBuy()">구매하기</a>	
+					<a class="btn btn-primary btn-md" href="#">장바구니</a>			
+				</c:if>
 				
 				<c:if test="${loginUser.id==resUser || loginUser.user_Level==2}"> 
 					<a class="btn btn-primary btn-md" href="deleteFood.app?r_num=${foodFileMapVO.r_num}&f_num=${foodFileMapVO.f_num}">음식 삭제하기</a>						

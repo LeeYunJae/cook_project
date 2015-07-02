@@ -26,10 +26,10 @@
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
 
-<!-- Custom JS -->
-<script src="food/js/food_add.js"></script>
-<script src="common/js/signUp.js"></script>
 
+<!-- Custom JS -->
+<script src="food/js/food_buy.js"></script>
+<script src="common/js/signUp.js"></script>
 
 <style>
 .#ex_date {
@@ -55,12 +55,13 @@
 
 			<div class="well bs-component">
 
-				<form class="form-horizontal" id="detailForm" name="detailForm" action="addFood.app" method="post" enctype="multipart/form-data">
+				<form class="form-horizontal">
 				
-				<input type="hidden" id="f_recipe" name="f_recipe" value="">
-				<input type="hidden" id="f_ingredients" name="f_ingredients" value="">
-				<input type="hidden" id="f_origin" name="f_origin" value="">
-				<input type="hidden" id="r_num" name="r_num" value="${r_num}">
+				<input type="hidden" id="f_num" name="f_num" value="${f_num}">
+				<input type="hidden" id="f_price" name="f_price" value="${f_price}">
+				<input type="hidden" id="count" name="count" value="${count}">
+				<input type="hidden" id="totalPrice" name="totalPrice" value="${f_price * count}">
+				<input type="hidden" id="userMileage" name="userMileage" value="${userVO.mileage}">
 
 				<h4>01. 주문자 정보</h4>
 				<hr>
@@ -138,35 +139,30 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label">합계</label>
 						<div class="col-sm-4">
-							<h5 id="totalPrice">${f_price * count}</h5>
+							<h5>${f_price * count}원</h5>
 						</div>
-					</div>
+					</div>					
 					<div class="form-group">
 						<label class="col-sm-2 control-label">적립금 적용</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="mileage" name="mileage" onforminput="totalPrice()" placeholder="보유하고계신 마일리지는${userVO.mileage}입니다">
+							<input type="text" class="form-control" id="mileageForm" name="mileageForm" onblur="resultPrice();" placeholder="보유하고계신 마일리지는 ${userVO.mileage}포인트 입니다">
 						</div>
-					</div>
+					</div>					
 					<div class="form-group">
 						<label class="col-sm-2 control-label">총 결제금액</label>
 						<div class="col-sm-4">
-							<input type="text" id="resultPrice">
+							<input type="text" class="form-control" id="finalResultPrice" name="finalResultPrice">
 						</div>
 					</div>
 				<hr>
-				
-
 
 				<br>
 				<br>
-
-				
-					
-
 
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<input type="button" onclick="totalDetail()" class="btn btn-danger" value="구매하기">
+							<%-- <a class="btn btn-primary btn-md" href="buyFood.app?f_num=${f_num}&count=${count}&o_price=${finalResultPrice}">결제하기</a> --%>
+							<a class="btn btn-primary btn-md" onclick="buy()">결제하기</a>
 						</div>
 					</div>
 					

@@ -1,5 +1,7 @@
 package kr.co.cooks.vo;
 
+import java.sql.Timestamp;
+
 
 public class FoodMainFileListMapVO {
 	private int f_num;				//음식 번호
@@ -12,6 +14,7 @@ public class FoodMainFileListMapVO {
 	private String f_store;			//보관방법
 	private int f_count;			//매출량
 	private String r_num;			//사업자 등록번호
+	private Timestamp f_regi_date;	//음식 등록날짜
 	private String saveFileName;	//저장된 파일 이름
 	
 	
@@ -75,6 +78,12 @@ public class FoodMainFileListMapVO {
 	public void setR_num(String r_num) {
 		this.r_num = r_num;
 	}
+	public Timestamp getF_regi_date() {
+		return f_regi_date;
+	}
+	public void setF_regi_date(Timestamp f_regi_date) {
+		this.f_regi_date = f_regi_date;
+	}
 	public String getSaveFileName() {
 		return saveFileName;
 	}
@@ -85,11 +94,13 @@ public class FoodMainFileListMapVO {
 	
 	@Override
 	public String toString() {
-		return "FoodFileListMapVO [f_num=" + f_num + ", f_name=" + f_name
+		return "FoodMainFileListMapVO [f_num=" + f_num + ", f_name=" + f_name
 				+ ", f_price=" + f_price + ", f_recipe=" + f_recipe
 				+ ", f_ex_date=" + f_ex_date + ", f_ingredients="
 				+ f_ingredients + ", f_origin=" + f_origin + ", f_store="
 				+ f_store + ", f_count=" + f_count + ", r_num=" + r_num
-				+ ", saveFileName=" + saveFileName + "]";
+				+ ", f_regi_date=" + f_regi_date + ", saveFileName="
+				+ saveFileName + "]";
 	}
+	
 }

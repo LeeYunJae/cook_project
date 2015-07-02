@@ -1,5 +1,6 @@
 package kr.co.cooks.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import kr.co.cooks.vo.FoodFileListVO;
@@ -42,6 +43,23 @@ public interface FoodDao {
 	
 	//메인 사진 삭제
 	public void deleteFoodFiles(int f_num);
+	
+	//구매번호 테이블에 구매내역 추가
+	public void addOrderNum(String userId);
+	
+	//구매 테이블에 구매내역 추가
+	public void addOrders(HashMap<String, Object> hashMap);
+	
+	//마일리지 적립
+	public void minusMileage(HashMap<String, Object> mileageMap);
+	
+	//마일리지 적립
+	public void addMileage(HashMap<String, Object> mileageMap);
+	
+	//매출량 ++
+	public void addFoodCount(int f_num);
+	
+	
 	
 
 
